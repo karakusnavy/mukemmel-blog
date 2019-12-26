@@ -1,15 +1,39 @@
 
-const Footer = () => {
-    return (
+import React from "react";
+import firebase from 'firebase'
+import firebaseconnection from '../firebaseconnection'
+if (!firebase.apps.length) {
+  firebase.initializeApp(firebaseconnection);
+}
 
-        <footer class="footer-area section-gap" style={{borderRadius:20}}  >
+
+export default class Footer extends React.Component{
+    constructor(props) {
+        super(props)
+        this.state = {
+          anasayfaSettings:[]
+        }
+      }
+    
+      componentDidMount(){
+        firebase.database().ref('homesettings').once('value', (data) => {     
+          var Data = data.toJSON()
+          this.setState({
+            anasayfaSettings: Data
+          })
+        })
+      }
+    
+    render(){
+        return(
+            <footer class="footer-area section-gap" style={{borderRadius:20}}  >
             <div class="container">
                 <div class="row">
                     <div class="col-lg-5 col-md-6 col-sm-6">
                         <div class="single-footer-widget">
                             <h6>Bu Site Hakkında</h6>
                             <p>
-                                Kullanılan teknolojiler:
+                               {this.state.anasayfaSettings.footertext}
 							</p>
                             <a>
                                 Next JS, React JS, Firebase, Markdown
@@ -49,7 +73,7 @@ const Footer = () => {
             
       
         </footer >
-    )
+        )
+    }
 }
-
-export default Footer;
+ 

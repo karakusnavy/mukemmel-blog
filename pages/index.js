@@ -2,24 +2,27 @@ import React from "react";
 import Header from './SharedPages/Header'
 import Footer from './SharedPages/Footer'
 import firebase from 'firebase'
-
-var firebaseConfig = {
-  apiKey: "",
-  authDomain: "reactjs-98938.firebaseapp.com",
-  databaseURL: "https://reactjs-98938.firebaseio.com",
-  projectId: "",
-  storageBucket: "reactjs-98938.appspot.com",
-  messagingSenderId: "",
-  appId: "",
-  measurementId: ""
-};
-
-// Initialize Firebase
+import firebaseconnection from './firebaseconnection'
 if (!firebase.apps.length) {
-  firebase.initializeApp(firebaseConfig);
+  firebase.initializeApp(firebaseconnection);
 }
 
 export default class Home extends React.Component {
+  constructor(props) {
+    super(props)
+    this.state = {
+      anasayfaSettings:[]
+    }
+  }
+
+  componentDidMount(){
+    firebase.database().ref('homesettings').once('value', (data) => {     
+      var Data = data.toJSON()
+      this.setState({
+        anasayfaSettings: Data
+      })
+    })
+  }
 
   render() {
     return (
@@ -93,29 +96,9 @@ export default class Home extends React.Component {
               <img src="img/ben.jpg" alt="" class="img-fluid"></img>
             </div>
             <div class="col-md-9 mt-sm-20">
-              <p>Merhaba ben Samed Karakuş, 2000 yılında Kayseri'de doğdum. Küçüklüğümden bu yana yazılım ve
-                teknoloji bağımlısı birisiyim. Sürekli güncel teknolojileri
-                takip eder kendimi yazılım alanlarında geliştirmeye çalışırım. Pozitif düşünmeye özen gösteren
-                ve enerjik birisiyim. Ortaokul zamanlarından Lise'ye geçiş
-                esnasında yazılım ile tanıştım. Kendimi bu alanda geliştirmem gerektiğini çok kısa sürede
-                anladım. 2014 senesinden beridir bu alanda kendimi sürekli
-                geliştirmeye çalışır yeni projeler üretmeye çalışırım.
+              <p>{this.state.anasayfaSettings.hakkimda}
 					</p>
-              <p>
-                Meslek lisesine gitmem ve lise yıllarında sürekli yazılımla ilgilenmem üniversiteye gitmeme
-                engel oldu. Zamanımın bir çoğunu yazılım ve teknolojileri
-                öğrenmeyle, aynı zamanda yeni projeler geliştirmeye harcıyorum. En büyük hedeflerimden bir
-                tanesi dünyada trend bir yazılım firmasının kurucusu
-                olmak veya başına geçmek.
-					</p>
-              <p>
-                Sadece yazılımla ilgilenmekle kalmıyorum; aynı zamanda çeşitli proje yarışmalarına(hackathon,
-                fikir yarışmaları vs..) katılıyorum. 2018-2019 yılları
-                arasında Orta Anadolu Kalkınma Ajansı tarafından desteklenen Sera Kuluçka Merkezi ve Erciyes
-                Teknopark tarafından düzenlenen yarışmada projem yatırım
-                ve destek aldı. Size bunun gibi bir çok farklı başarı hikayemi analatabilirim. Kişisel sitemi
-                gezmeye devam edin :)
-					</p>
+            
             </div>
           </div>
         </div>
