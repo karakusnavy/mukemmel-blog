@@ -11,12 +11,12 @@ export default class Home extends React.Component {
   constructor(props) {
     super(props)
     this.state = {
-      anasayfaSettings:[]
+      anasayfaSettings: []
     }
   }
 
-  componentDidMount(){
-    firebase.database().ref('homesettings').once('value', (data) => {     
+  componentDidMount() {
+    firebase.database().ref('homesettings').once('value', (data) => {
       var Data = data.toJSON()
       this.setState({
         anasayfaSettings: Data
@@ -88,7 +88,35 @@ export default class Home extends React.Component {
             </div>
           </div>
         </section>
-
+        <div class="section-top-border" style={{ padding: 60 }}>
+          <h3 class="mb-30">Son Blog Yazılarım <a style={{fontSize:12,backgroundColor:'#499ac1',color:'white',borderRadius:5,padding:2}}>TÜM BLOG YAZILARIM</a></h3>
+          <div class="row">
+            <div class="col-lg-4">
+              <blockquote class="generic-blockquote">
+              <h4>Başlık</h4>
+                Örnek metin örnek metin Örnek metin örnek metin Örnek metin örnek metin Örnek metin örnek metinÖrnek metin örnek metin
+                  <br />
+                  <a style={{paddingTop:5,color:'black',borderRadius:5,marginTop:20}}>DEVAMINI OKU</a>
+                </blockquote>
+            </div>
+            <div class="col-lg-4">
+              <blockquote class="generic-blockquote">
+              <h4>Başlık</h4>
+                Örnek metin örnek metin Örnek metin örnek metin Örnek metin örnek metin Örnek metin örnek metinÖrnek metin örnek metin
+                  <br />
+                  <a style={{paddingTop:5,color:'black',borderRadius:5,marginTop:20}}>DEVAMINI OKU</a>
+                </blockquote>
+            </div>
+            <div class="col-lg-4">
+              <blockquote class="generic-blockquote">
+              <h4>Başlık</h4>
+                Örnek metin örnek metin Örnek metin örnek metin Örnek metin örnek metin Örnek metin örnek metinÖrnek metin örnek metin
+                  <br />
+                  <a style={{paddingTop:5,color:'black',borderRadius:5,marginTop:20}}>DEVAMINI OKU</a>
+                </blockquote>
+            </div>
+          </div>
+        </div>
         <div class="section-top-border" style={{ padding: 60 }}>
           <h3 class="mb-30">SAMED KARAKUŞ</h3>
           <div class="row">
@@ -97,8 +125,8 @@ export default class Home extends React.Component {
             </div>
             <div class="col-md-9 mt-sm-20">
               <p>{this.state.anasayfaSettings.hakkimda}
-					</p>
-            
+              </p>
+
             </div>
           </div>
         </div>
