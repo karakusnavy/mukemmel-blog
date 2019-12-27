@@ -26,15 +26,14 @@ export default class Home extends React.Component {
 
   render() {
     return (
-      <div class="protfolio-wrap">
+      <div>
         <Header />
 
         <section class="banner-area relative" id="home">
           <div class="container">
             <div class="row fullscreen d-flex align-items-center justify-content-center">
               <div class="banner-content col-lg-10">
-                <h5 class="text-uppercase" style={{ color: 'white', borderWidth: 1 }} >YAZILIM,
-							TEKNOLOJİ, BİLİM</h5>
+                <h5 class="text-uppercase" style={{ color: 'white', borderWidth: 1 }} >Mid-Level</h5>
                 <h1>
                   Frontend Developer
 						</h1>

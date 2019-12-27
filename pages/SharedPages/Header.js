@@ -1,8 +1,7 @@
 
 const Header = () => {
     return (
-
-        <header class="default-header">
+        <header  class="default-header">
             <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"></meta>
             <link rel="shortcut icon" href="img/fav.png"></link>
             <meta name="author" content="codepixer"></meta>
@@ -21,8 +20,8 @@ const Header = () => {
             <script src="/js/jquery.sticky.js"></script>
             <script src="/js/jquery.nice-select.min.js"></script>
             <script src="/js/main.js"></script>
-            <nav class="navbar navbar-expand-lg  navbar-light" style={{marginTop:50}}>
-                <div class="container">
+            <nav class="navbar navbar-expand-lg  navbar-light" style={{marginTop:70}}>
+                <div class="container" >
                     <a class="navbar-brand" href="index.html">
                         <img src="img/logo.png" alt=""></img>
                     </a>
