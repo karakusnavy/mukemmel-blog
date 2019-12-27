@@ -35,7 +35,7 @@ export default class blog extends React.Component {
                     <div class="row">
 
 
-                        <div class="col-lg-10">
+                        <div class="col-lg-9">
                             <div class="col-lg-12 blogPost">
                                 <div class="row">
                                     <div class="col-sm-4 align-items-center justify-content-center">
@@ -92,8 +92,28 @@ export default class blog extends React.Component {
                             </div>
 
                         </div>
-                        <div class="col-lg-2">
-                            Buraya Reklam Ver ?
+                        <div class="col-lg-3">
+
+                                <div class="row">
+                                    <div class="col-lg-12 etiketler">
+                                            <h5>Etiketler</h5>
+                                            <a>#yazılım </a>
+                                            <a>#teknoloji </a>
+                                            <a>#hayat </a>
+                                            <a>#girişimcilik </a>
+                                            <a>#araba </a>
+                                            <a>#yapayzeka </a>
+                                            <a>#trend </a>
+                                            <a>#moda </a>
+                                            <a>#tasarım </a>
+                                            <a>#kayseri </a>
+                                            <a>#türkiye </a>
+                                            <a>#selmankahya </a>
+                                            <a>#youtube </a>
+                                            
+                                    </div>
+                                </div>
+
                     </div>
 
                     </div>

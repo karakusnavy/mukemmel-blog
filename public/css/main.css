@@ -2578,6 +2578,12 @@ h6 {
   text-align: center;
 }
 
+.row .etiketler a:hover{
+  color:#38a4ff;
+  cursor: pointer;
+  font-weight: bold;
+}
+
 .generic-banner .height {
   height: 600px;
 }
