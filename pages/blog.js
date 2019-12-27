@@ -28,13 +28,75 @@ export default class blog extends React.Component {
 
                 <section class="generic-banner" >
                     <div class="container">
-                        <div  style={{height:200}} class="row align-items-center justify-content-center"></div>
+                        <div style={{ height: 200 }} class="row align-items-center justify-content-center"></div>
                     </div>
                 </section>
-                <div class="container" style={{marginTop:20,marginBottom:20}}>
+                <div class="container" style={{ marginTop: 20, marginBottom: 20 }}>
+                    <div class="row">
 
-                    <h1>HELLO</h1>
 
+                        <div class="col-lg-10">
+                            <div class="col-lg-12 blogPost">
+                                <div class="row">
+                                    <div class="col-sm-4 align-items-center justify-content-center">
+                                        <img src="img/mac_background.jpg" style={{ height: 180,width:'95%', borderRadius: 10, backgroundSize: 'contain' }} />
+                                    </div>
+                                    <div class="col-sm-6 title">
+                                        <h3>Başlık Burası</h3><br />
+                                        <p>
+                                            İçerik, İçerik,İçerik, İçerik,İçerik, İçerik,İçerik, İçerik,İçerik, İçerik,
+                                            İçerik, İçerik,İçerik, İçerik,İçerik, İçerik,İçerik, İçerik,İçerik, İçerik,
+                                            İçerik, İçerik,İçerik, İçerik,İçerik, İçerik,İçerik, İçerik,İçerik, İçerik,
+                                            İçerik, İçerik,İçerik, İçerik,İçerik, İçerik,İçerik, İçerik,İçerik, İçerik,
+                                </p>
+                                        <b>09.25.2019 - Samed Karakuş</b>
+
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-lg-12 blogPost">
+                                <div class="row">
+                                    <div class="col-sm-4 align-items-center justify-content-center">
+                                        <img src="img/mac_background_2.jpg" style={{ height: 180,width:'95%', borderRadius: 10, backgroundSize: 'contain' }} />
+                                    </div>
+                                    <div class="col-sm-6 title">
+                                        <h3>Başlık Burası</h3><br />
+                                        <p>
+                                            İçerik, İçerik,İçerik, İçerik,İçerik, İçerik,İçerik, İçerik,İçerik, İçerik,
+                                            İçerik, İçerik,İçerik, İçerik,İçerik, İçerik,İçerik, İçerik,İçerik, İçerik,
+                                            İçerik, İçerik,İçerik, İçerik,İçerik, İçerik,İçerik, İçerik,İçerik, İçerik,
+                                            İçerik, İçerik,İçerik, İçerik,İçerik, İçerik,İçerik, İçerik,İçerik, İçerik,
+                                </p>
+                                        <b>09.25.2019 - Samed Karakuş</b>
+
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-lg-12 blogPost">
+                                <div class="row">
+                                    <div class="col-sm-4 align-items-center justify-content-center">
+                                        <img src="img/mac_background.jpg" style={{ height: 180,width:'95%', borderRadius: 10, backgroundSize: 'contain' }} />
+                                    </div>
+                                    <div class="col-sm-6 title">
+                                        <h3>Başlık Burası</h3><br />
+                                        <p>
+                                            İçerik, İçerik,İçerik, İçerik,İçerik, İçerik,İçerik, İçerik,İçerik, İçerik,
+                                            İçerik, İçerik,İçerik, İçerik,İçerik, İçerik,İçerik, İçerik,İçerik, İçerik,
+                                            İçerik, İçerik,İçerik, İçerik,İçerik, İçerik,İçerik, İçerik,İçerik, İçerik,
+                                            İçerik, İçerik,İçerik, İçerik,İçerik, İçerik,İçerik, İçerik,İçerik, İçerik,
+                                </p>
+                                        <b>09.25.2019 - Samed Karakuş</b>
+
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+                        <div class="col-lg-2">
+                            Buraya Reklam Ver ?
+                    </div>
+
+                    </div>
                 </div>
 
                 <Footer />

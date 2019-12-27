@@ -2562,11 +2562,16 @@ h6 {
 .footer-text a, .footer-text i {
   color: #3f8cbe;
 }
-
+.title h3:hover{
+  color:red;
+  cursor: pointer;
+}
 .whole-wrap {
   background-color: #fff;
 }
-
+.blogPost{
+  margin-top: 20px;
+}
 .generic-banner {
   background-image: url('../img/mac_background.jpg');
   background-size: cover;
