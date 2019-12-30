@@ -2644,3 +2644,7 @@ h6 {
 .switch-wrap p {
   margin: 0;
 }
+
+#newbloginput{
+  background-color: red;
+}
