@@ -34,10 +34,10 @@ const Header = () => {
                     <div class="collapse navbar-collapse justify-content-end align-items-center"
                         id="navbarSupportedContent">
                         <ul class="navbar-nav">
-                            <li><a href="#home">Anasayfa</a></li>
+                            <li><a href="/">Anasayfa</a></li>
                             <li><a href="#">Portfolyo</a></li>
                             <li><a href="#">İlham</a></li>
-                            <li><a href="#">Blog</a></li>
+                            <li><a href="/blog">Blog</a></li>
                             <li><a href="#">İletişim</a></li>
                         </ul>
                     </div>
