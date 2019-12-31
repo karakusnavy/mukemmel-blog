@@ -9,8 +9,26 @@ export default class dashboard extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
+            blogs: []
         };
     }
+
+    componentDidMount() {
+        var getting = []
+        firebase.database().ref().child('blogs').on('child_added', data => {
+            
+            getting.push({
+                title:data.val().title,
+                date:data.val().date,
+                image:data.val().image
+            })
+            
+            this.setState({ blogs: getting })
+            console.log(getting)
+        })
+    }
+
+
     render() {
         return (
             <div>
@@ -53,10 +71,10 @@ export default class dashboard extends React.Component {
                                     </div>
                                 </div>
                                 <div class="col-xl-6 col-sm-6 mb-6">
-                                <button type="button" class="btn btn-success">Yeni Blog Ekle</button>
-                                <button style={{marginLeft:10}} type="button" class="btn btn-success">Yeni Kullanıcı Ekle</button>
+                                    <button type="button" class="btn btn-success">Yeni Blog Ekle</button>
+                                    <button style={{ marginLeft: 10 }} type="button" class="btn btn-success">Yeni Kullanıcı Ekle</button>
                                 </div>
-                                
+
                             </div>
                             <div class="card mb-3">
                                 <div class="card-header">
@@ -82,12 +100,17 @@ export default class dashboard extends React.Component {
                                                 </tr>
                                             </tfoot>
                                             <tbody>
-                                                <tr>
-                                                    <td>Tiger Nixon</td>
-                                                    <td>System Architect</td>
-                                                    <td><button type="button" class="btn btn-primary">YAZIYA GİT</button></td>
-                                                    <td><button type="button" class="btn btn-danger">SİL</button></td>
-                                                </tr>
+                                                {
+                                                    this.state.blogs.map((item) =>
+                                                        <tr>
+                                                            <td>{item.title}</td>
+                                                            <td>{item.date}</td>
+                                                            <td><button type="button" class="btn btn-primary">YAZIYA GİT</button></td>
+                                                            <td><button type="button" class="btn btn-danger">SİL</button></td>
+                                                        </tr>
+                                                    )
+                                                }
+
                                                 <tr>
                                                     <td>Garrett Winters</td>
                                                     <td>Accountant</td>
