@@ -29,18 +29,86 @@ export default class dashboard extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            blogs: []
+            blogs: [],
+            image: null,
+            imagelocation: null,
+            title: '',
+            blog: ''
         };
+        this.onChange = this.onChange.bind(this)
+    }
+
+    Convert(link) {
+        var trMap = {
+            'çÇ': 'c',
+            'ğĞ': 'g',
+            'şŞ': 's',
+            'üÜ': 'u',
+            'ıİ': 'i',
+            'öÖ': 'o'
+        };
+
+        for (var key in trMap) {
+            link = link.replace(new RegExp('[' + key + ']', 'g'), trMap[key]);
+        }
+        return link.replace(/[^-a-zA-Z0-9\s]+/ig, '')
+            .replace(/\s/gi, "-")
+            .replace(/[-]+/gi, "-")
+            .toLowerCase();
     }
 
 
-    deleteBlog = async (id) => {        
-        await firebase.database().ref('blogs/'+id).remove();
+
+    addNewBlog = async () => {
+
+
+
+        var today = new Date();
+        var dd = String(today.getDate()).padStart(2, '0');
+        var mm = String(today.getMonth() + 1).padStart(2, '0'); //January is 0!
+        var yyyy = today.getFullYear();
+        var clock = today.getHours() + ':' + today.getMinutes()
+
+        today = mm + '/' + dd + '/' + yyyy + ' ' + clock;
+
+
+
+        await this.uploadImage()
+        var linkBlog = this.Convert(this.state.title)
+        await firebase.database().ref().child('blogs').push().set({
+            title: this.state.title,
+            blog: this.state.blog,
+            image: this.state.imagelocation,
+            date: today,
+            link: linkBlog
+        });
+
+        alert('Yeni yazı eklendi')
+
+
+    }
+
+    onChange = async (e) => {
+        var adana = e.target.files[0]
+        await this.setState({ image: adana })
+        console.log(this.state.image)
+    }
+    uploadImage = async () => {
+        var ref = firebase.storage().ref().child('images/' + this.state.image.name);
+        await ref.put(this.state.image)
+        await firebase.storage().ref().child('images/' + this.state.image.name).getDownloadURL().then((ress) => {
+            this.setState({
+                imagelocation: ress
+            })
+        })
+    }
+    deleteBlog = async (id) => {
+        await firebase.database().ref('blogs/' + id).remove();
         alert('Silindi')
 
     }
 
-    LiveRemoved(){
+    LiveRemoved() {
         var getting = []
         firebase.database().ref().child('blogs').on('child_removed', data => {
             getting.push({
@@ -48,7 +116,7 @@ export default class dashboard extends React.Component {
                 date: data.val().date,
                 image: data.val().image,
                 link: data.val().link,
-                id:data.key
+                id: data.key
             })
             this.setState({ blogs: getting })
         })
@@ -62,7 +130,7 @@ export default class dashboard extends React.Component {
                 date: data.val().date,
                 image: data.val().image,
                 link: data.val().link,
-                id:data.key
+                id: data.key
             })
             this.setState({ blogs: getting })
         })
@@ -75,6 +143,31 @@ export default class dashboard extends React.Component {
     render() {
         return (
             <div>
+                <div class="modal fade" id="newBlogModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                    <div class="modal-dialog" role="document">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="exampleModalLabel">Yeni Blog Ekle</h5>
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+                            <div style={{ padding: 15 }} >
+
+                                Blog Başlığı:<br />
+                                <input id="newbloginput" onChange={(text) => this.setState({ title: text.target.value })} placeholder="Başlık Giriniz" /><br />
+                                Blog Yazısı Giriniz: <br />
+                                <textarea placeholder="Blog Yazısı Giriniz" onChange={(text) => this.setState({ blog: text.target.value })} value={this.state.blog} /><br />
+                                Yazı Resmi Seçiniz:
+                                <input id="newbloginput" type="file" onChange={this.onChange} /><br />
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Kapat</button>
+                                <button type="button" class="btn btn-primary" data-dismiss="modal" onClick={() => this.addNewBlog()} >Yeni Blog Ekle</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
                 <title>Samed Karakuş Admin</title>
                 <link rel="stylesheet" href="css/bootstrap.css"></link>
                 <link href="../admin/vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css" />
@@ -114,7 +207,7 @@ export default class dashboard extends React.Component {
                                     </div>
                                 </div>
                                 <div class="col-xl-6 col-sm-6 mb-6">
-                                    <button type="button" class="btn btn-success">Yeni Blog Ekle</button>
+                                    <button type="button" class="btn btn-success" data-toggle="modal" data-target="#newBlogModal">Yeni Blog Ekle</button>
                                     <button style={{ marginLeft: 10 }} type="button" class="btn btn-success">Yeni Kullanıcı Ekle</button>
                                 </div>
 
@@ -125,34 +218,28 @@ export default class dashboard extends React.Component {
                                     Blog Yazılarım</div>
                                 <div class="card-body">
                                     <div class="table-responsive">
-                                        <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                                        <table class="table table-bordered" width="100%" cellspacing="0">
                                             <thead>
                                                 <tr>
+                                                    <th>Resim</th>
                                                     <th>Başlık</th>
                                                     <th>Tarih</th>
                                                     <th>Yazıya Git</th>
                                                     <th>Sil</th>
                                                 </tr>
                                             </thead>
-                                            <tfoot>
-                                                <tr>
-                                                    <th>Başlık</th>
-                                                    <th>Tarih</th>
-                                                    <th>Yazıya Git</th>
-                                                    <th>Sil</th>
-                                                </tr>
-                                            </tfoot>
                                             <tbody>
                                                 {
                                                     this.state.blogs.map((item) =>
                                                         <tr>
+                                                            <td><img src={item.image} style={{height:150}} /></td>
                                                             <td>{item.title}</td>
                                                             <td>{item.date}</td>
                                                             <td><button type="button" onClick={() => alert(item.link)} class="btn btn-primary">YAZIYA GİT</button></td>
                                                             <td><button type="button" onClick={() => this.deleteBlog(item.id)} class="btn btn-danger">SİL</button></td>
                                                         </tr>
                                                     )
-                                                }                                             
+                                                }
                                             </tbody>
                                         </table>
                                     </div>
@@ -171,6 +258,23 @@ export default class dashboard extends React.Component {
                 <script src="../admin/js/sb-admin.min.js"></script>
                 <script src="../admin/js/demo/datatables-demo.js"></script>
                 <script src="../admin/js/demo/chart-area-demo.js"></script>
+                <style jsx>{`
+
+input{
+padding:10px;
+font-weight:bold;
+margin:5px;
+width:400 !important;
+}
+textarea{
+padding:10px;
+font-weight:bold;
+height:200px;
+width:400px;
+margin:5px
+}
+
+`}</style>
             </div>
         )
     }
