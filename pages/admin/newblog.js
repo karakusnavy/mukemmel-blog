@@ -16,8 +16,24 @@ export default class newblog extends React.Component {
         };
         this.onChange = this.onChange.bind(this)
     }
-
-
+    Convert (link) {
+        var trMap = {
+            'çÇ':'c',
+            'ğĞ':'g',
+            'şŞ':'s',
+            'üÜ':'u',
+            'ıİ':'i',
+            'öÖ':'o'
+        };
+    
+        for(var key in trMap) {
+            link = link.replace(new RegExp('['+key+']','g'), trMap[key]);
+        }
+        return  link.replace(/[^-a-zA-Z0-9\s]+/ig, '')
+                    .replace(/\s/gi, "-")
+                    .replace(/[-]+/gi, "-")
+                    .toLowerCase();
+    }
 
 
 
@@ -36,12 +52,13 @@ export default class newblog extends React.Component {
       
 
         await this.uploadImage()
-
+        var linkBlog = this.Convert(this.state.title)
         await firebase.database().ref().child('blogs').push().set({
             title: this.state.title,
             blog: this.state.blog,
             image: this.state.imagelocation,
-            date: today
+            date: today,
+            link: linkBlog
         });
 
         alert('Yeni yazı eklendi')

@@ -5,6 +5,26 @@ if (!firebase.apps.length) {
     firebase.initializeApp(firebaseconnection);
 }
 
+function Convert(link) {
+    var trMap = {
+        'çÇ': 'c',
+        'ğĞ': 'g',
+        'şŞ': 's',
+        'üÜ': 'u',
+        'ıİ': 'i',
+        'öÖ': 'o'
+    };
+
+    for (var key in trMap) {
+        link = link.replace(new RegExp('[' + key + ']', 'g'), trMap[key]);
+    }
+    return link.replace(/[^-a-zA-Z0-9\s]+/ig, '')
+        .replace(/\s/gi, "-")
+        .replace(/[-]+/gi, "-")
+        .toLowerCase();
+}
+
+
 export default class dashboard extends React.Component {
     constructor(props) {
         super(props);
@@ -13,19 +33,42 @@ export default class dashboard extends React.Component {
         };
     }
 
-    componentDidMount() {
+
+    deleteBlog = async (id) => {        
+        await firebase.database().ref('blogs/'+id).remove();
+        alert('Silindi')
+
+    }
+
+    LiveRemoved(){
+        var getting = []
+        firebase.database().ref().child('blogs').on('child_removed', data => {
+            getting.push({
+                title: data.val().title,
+                date: data.val().date,
+                image: data.val().image,
+                link: data.val().link,
+                id:data.key
+            })
+            this.setState({ blogs: getting })
+        })
+    }
+
+    componentDidMount = async () => {
         var getting = []
         firebase.database().ref().child('blogs').on('child_added', data => {
-            
             getting.push({
-                title:data.val().title,
-                date:data.val().date,
-                image:data.val().image
+                title: data.val().title,
+                date: data.val().date,
+                image: data.val().image,
+                link: data.val().link,
+                id:data.key
             })
-            
             this.setState({ blogs: getting })
-            console.log(getting)
         })
+
+        this.LiveRemoved()
+
     }
 
 
@@ -105,18 +148,11 @@ export default class dashboard extends React.Component {
                                                         <tr>
                                                             <td>{item.title}</td>
                                                             <td>{item.date}</td>
-                                                            <td><button type="button" class="btn btn-primary">YAZIYA GİT</button></td>
-                                                            <td><button type="button" class="btn btn-danger">SİL</button></td>
+                                                            <td><button type="button" onClick={() => alert(item.link)} class="btn btn-primary">YAZIYA GİT</button></td>
+                                                            <td><button type="button" onClick={() => this.deleteBlog(item.id)} class="btn btn-danger">SİL</button></td>
                                                         </tr>
                                                     )
-                                                }
-
-                                                <tr>
-                                                    <td>Garrett Winters</td>
-                                                    <td>Accountant</td>
-                                                    <td><button type="button" class="btn btn-primary">YAZIYA GİT</button></td>
-                                                    <td><button type="button" class="btn btn-danger">SİL</button></td>
-                                                </tr>
+                                                }                                             
                                             </tbody>
                                         </table>
                                     </div>
