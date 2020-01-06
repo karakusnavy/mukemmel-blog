@@ -11,17 +11,31 @@ export default class Home extends React.Component {
   constructor(props) {
     super(props)
     this.state = {
-      anasayfaSettings: []
+      anasayfaSettings: [],
+      blogs: []
     }
   }
 
-  componentDidMount() {
-    firebase.database().ref('homesettings').once('value', (data) => {
+  componentDidMount = async () => {
+      firebase.database().ref('homesettings').once('value', (data) => {
       var Data = data.toJSON()
       this.setState({
         anasayfaSettings: Data
       })
     })
+
+    var getting = []
+    firebase.database().ref().child('blogs').on('child_added', data => {
+        getting.push({
+            title: data.val().title,
+            date: data.val().date,
+            image: data.val().image,
+            link: data.val().link,
+            id: data.key
+        })
+        this.setState({ blogs: getting.slice(0,3) })
+    })
+    console.log(this.state.blogs)
   }
 
   render() {
@@ -88,32 +102,26 @@ export default class Home extends React.Component {
           </div>
         </section>
         <div class="section-top-border" style={{ padding: 60 }}>
-          <h3 class="mb-30">Son Blog Yazılarım <a style={{fontSize:12,backgroundColor:'#499ac1',color:'white',borderRadius:5,padding:2}}>TÜM BLOG YAZILARIM</a></h3>
+          <h3 class="mb-30">Son Blog Yazılarım <a style={{ fontSize: 12, backgroundColor: '#499ac1', color: 'white', borderRadius: 5, padding: 2 }}>TÜM BLOG YAZILARIM</a></h3>
           <div class="row">
-            <div class="col-lg-4">
-              <blockquote class="generic-blockquote">
-              <h4>Başlık</h4>
-                Örnek metin örnek metin Örnek metin örnek metin Örnek metin örnek metin Örnek metin örnek metinÖrnek metin örnek metin
+
+            {
+                
+
+
+              this.state.blogs.map((item) => 
+                <div class="col-lg-4">
+                  <blockquote class="generic-blockquote">
+                    <h4>{item.title}</h4>
+                    {item.blog}
                   <br />
-                  <a style={{paddingTop:5,color:'black',borderRadius:5,marginTop:20}}>DEVAMINI OKU</a>
-                </blockquote>
-            </div>
-            <div class="col-lg-4">
-              <blockquote class="generic-blockquote">
-              <h4>Başlık</h4>
-                Örnek metin örnek metin Örnek metin örnek metin Örnek metin örnek metin Örnek metin örnek metinÖrnek metin örnek metin
-                  <br />
-                  <a style={{paddingTop:5,color:'black',borderRadius:5,marginTop:20}}>DEVAMINI OKU</a>
-                </blockquote>
-            </div>
-            <div class="col-lg-4">
-              <blockquote class="generic-blockquote">
-              <h4>Başlık</h4>
-                Örnek metin örnek metin Örnek metin örnek metin Örnek metin örnek metin Örnek metin örnek metinÖrnek metin örnek metin
-                  <br />
-                  <a style={{paddingTop:5,color:'black',borderRadius:5,marginTop:20}}>DEVAMINI OKU</a>
-                </blockquote>
-            </div>
+                    <a style={{ paddingTop: 5, color: 'black', borderRadius: 5, marginTop: 20 }}>DEVAMINI OKU</a>
+                  </blockquote>
+                </div>
+              )
+            }
+
+           
           </div>
         </div>
         <div class="section-top-border" style={{ padding: 60 }}>

@@ -123,7 +123,7 @@ export default class dashboard extends React.Component {
         })
 
     
-        firebase.database().ref().child('blogs').on('child_removed', data => {
+        firebase.database().ref().child('blogs').on('child_removed', data => {ğ
             var List = []
             List = this.state.blogs
             for(var i = 0;i<List.length;i++){
@@ -189,7 +189,7 @@ export default class dashboard extends React.Component {
                                             <div class="card-body-icon">
                                                 <i class="fas fa-fw fa-comments"></i>
                                             </div>
-                                            <div class="mr-5">26 Adet Blog Yazısı!</div>
+                                            <div class="mr-5">{this.state.blogs.length} Adet Blog Yazısı!</div>
                                         </div>
                                     </div>
                                 </div>
