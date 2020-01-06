@@ -22,7 +22,7 @@ const Header = () => {
             <script src="/js/main.js"></script>
             <nav class="navbar navbar-expand-lg  navbar-light" style={{marginTop:70}}>
                 <div class="container" >
-                    <a class="navbar-brand" href="index.html">
+                    <a class="navbar-brand" href="/">
                         <img src="img/logo.png" alt=""></img>
                     </a>
                     <button class="navbar-toggler" type="button" data-toggle="collapse"

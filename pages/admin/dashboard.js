@@ -108,20 +108,7 @@ export default class dashboard extends React.Component {
 
     }
 
-    LiveRemoved() {
-        var getting = []
-        firebase.database().ref().child('blogs').on('child_removed', data => {
-            getting.push({
-                title: data.val().title,
-                date: data.val().date,
-                image: data.val().image,
-                link: data.val().link,
-                id: data.key
-            })
-            this.setState({ blogs: getting })
-        })
-    }
-
+  
     componentDidMount = async () => {
         var getting = []
         firebase.database().ref().child('blogs').on('child_added', data => {
@@ -135,7 +122,17 @@ export default class dashboard extends React.Component {
             this.setState({ blogs: getting })
         })
 
-        this.LiveRemoved()
+    
+        firebase.database().ref().child('blogs').on('child_removed', data => {
+            var List = []
+            List = this.state.blogs
+            for(var i = 0;i<List.length;i++){
+                if(List[i].id == data.key){
+                    List.splice(i, 1);
+                }
+            }
+            this.setState({ blogs: List })
+        })
 
     }
 
