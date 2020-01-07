@@ -7,30 +7,37 @@ if (!firebase.apps.length) {
     firebase.initializeApp(firebaseconnection);
 }
 
-export default class blog extends React.Component {
+export default class singleblog extends React.Component {
     constructor(props) {
         super(props)
         this.state = {
             gelenUrl: null,
-            blogs: []
+            blogs: [],
+            title:'',
+            image:'',
+            blog:'',
         }
     }
-    componentDidMount() {
-        blog.getInitialProps = async ({ req, query }) => {
-            this.setState({ gelenUrl: query.id })
+    componentDidMount = async () => {
+        singleblog.getInitialProps = async ({ req, query }) => {
+            await this.setState({ gelenUrl: query.id })
         }
-        var getting = []
-        firebase.database().ref().child('blogs').on('child_added', data => {
-            getting.push({
-                title: data.val().title,
-                date: data.val().date,
-                image: data.val().image,
-                link: data.val().link,
-                blog: data.val().blog,
-                id: data.key
-            })
-            this.setState({ blogs: getting })
+   
+        await firebase.database().ref().child('blogs').on('child_added', data => {
+            if (data.val().link == this.state.gelenUrl) {
+                this.setState({
+                    title:data.val().title,
+                    image:data.val().image,
+                    blog:data.val().blog,
+                })
+             
+                
+               
+            }
         })
+
+
+
 
     }
     render() {
@@ -50,26 +57,11 @@ export default class blog extends React.Component {
 
 
                         <div class="col-lg-9">
-                            {
-                                this.state.blogs.map(item =>
-                                    <div class="col-lg-12 blogPost">
-                                        <div class="row">
-                                            <div class="col-sm-4 align-items-center justify-content-center">
-                                                <img src={item.image} style={{ height: 180, width: '95%', borderRadius: 10, backgroundSize: 'contain' }} />
-                                            </div>
-                                            <div class="col-sm-6 title">
-                                                <h3 onClick={()=>window.location.href('/')} >{item.title}</h3><br />
-                                                <p style={{ marginTop: -15 }} >
-                                                    {item.blog.length > 300 ? item.blog.substring(0, 280) + '...' : item.blog}
-                                                </p>
-                                                <b style={{ marginTop: -5 }} >{item.date} - Samed Karakuş</b>
-
-                                            </div>
-                                        </div>
-                                    </div>
-                                )
-                            }
-
+                            <h2>{this.state.title}</h2>
+                            <img style={{ width: '90%', marginTop: 20 }} src={this.state.image} />
+                            <p style={{ color: 'black', marginTop: 10 }} >
+                               {this.state.blog}
+                            </p>
 
 
 
