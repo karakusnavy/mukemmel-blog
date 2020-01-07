@@ -58,7 +58,7 @@ export default class blog extends React.Component {
                                                 <img src={item.image} style={{ height: 180, width: '95%', borderRadius: 10, backgroundSize: 'contain' }} />
                                             </div>
                                             <div class="col-sm-6 title">
-                                                <h3 onClick={()=>window.location.href('/')} >{item.title}</h3><br />
+                                                <h3 href="/" >{item.title}</h3><br />
                                                 <p style={{ marginTop: -15 }} >
                                                     {item.blog.length > 300 ? item.blog.substring(0, 280) + '...' : item.blog}
                                                 </p>
