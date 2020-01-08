@@ -13,9 +13,7 @@ const Layout = props  => (
 );
 
 Layout.getInitialProps = async ({ req }) => {
-    const res = await fetch("http://localhost:3000/api/posts");
-    const json = await res.json();
-    return { posts: json.posts };
+    alert(req)
     //
 };
 
