@@ -9,11 +9,19 @@ if (!firebase.apps.length) {
 const posts = ({ query }) => {
   return (
     <Layout sidebar={true} >
-      <h2>{query[0].title}</h2>
-      <img style={{ width: '90%', marginTop: 20 }} src={query[0].image} />
-      <p style={{ color: 'black', marginTop: 10 }} >
-        {query[0].blog}
-      </p>
+      {
+        query[0] == undefined ?
+          <h4>Sayfa Bulunamadı</h4>
+          :
+          <div>
+            <h2>{query[0].title}</h2>
+            <img style={{ width: '90%', marginTop: 20 }} src={query[0].image} />
+            <p style={{ color: 'black', marginTop: 10 }} >
+              {query[0].blog}
+            </p>
+          </div>
+      }
+
     </Layout>
   )
 }
