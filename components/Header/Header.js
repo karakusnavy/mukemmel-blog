@@ -1,5 +1,6 @@
 
 import Links from '../Links/Link';
+import Link from 'next/link'
 
 const Header = () => {
     return (
@@ -19,11 +20,31 @@ const Header = () => {
                     <div class="collapse navbar-collapse justify-content-end align-items-center"
                         id="navbarSupportedContent">
                         <ul class="navbar-nav">
-                            <li><a href="/">Anasayfa</a></li>
-                            <li><a href="#">Portfolyo</a></li>
-                            <li><a href="#">İlham</a></li>
-                            <li><a href="/blog">Blog</a></li>
-                            <li><a href="#">İletişim</a></li>
+                            <li>
+                                <Link href={'/'}>
+                                    <a>Anasayfa</a>
+                                </Link>
+                            </li>
+                            <li>
+                                <Link href={'/'}>
+                                    <a>Portfolyo</a>
+                                </Link>
+                            </li>
+                            <li>
+                                <Link href={'/'}>
+                                    <a>İlham</a>
+                                </Link>
+                            </li>
+                            <li>
+                                <Link href={'/blog'}>
+                                    <a>Blog</a>
+                                </Link>
+                            </li>
+                            <li>
+                                <Link href={'/'}>
+                                    <a>İletişim</a>
+                                </Link>
+                            </li>
                         </ul>
                     </div>
                 </div>
