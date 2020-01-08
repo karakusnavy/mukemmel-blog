@@ -1,7 +1,16 @@
+import React from 'react'
 import Header from '../components/Header/Header'
 import Footer from '../components/Footer/Footer'
 import Link from 'next/link'
-const Home = () => {
+import firebase from 'firebase'
+import firebaseconnection from '../components/firebaseconnection'
+if (!firebase.apps.length) {
+  firebase.initializeApp(firebaseconnection);
+}
+
+
+
+const Home = ({ posts }) => {
   return (
     <>
       <Header />
@@ -144,19 +153,22 @@ const Home = () => {
         <h3 className="mb-30">Son Blog Yazılarım<a style={{ fontSize: 12, backgroundColor: '#499ac1', color: 'white', borderRadius: 5, padding: 2 }}>TÜM BLOG YAZILARIM</a></h3>
         <div className="row">
 
+          {
 
-         
+
+
+            posts.map((item) =>
               <div className="col-lg-6">
                 <blockquote className="generic-blockquote">
                   <div className="row">
                     <div className="col-lg-2">
-                      <img src={'item.image'} style={{ height: 75, width: 75, backgroundColor: 'white' }} />
+                      <img src={item.image} style={{ height: 75, width: 75, backgroundColor: 'white' }} />
                     </div>
                     <div className="col-lg-10">
-                      <h4>{'item.title.'.length > 36 ? 'item.title'.substring(0, 3) + '...' : 'item.title'}</h4>
-                      {'item.blog'}
+                      <h4>{item.title.length > 36 ? item.title.substring(0, 37) + '...' : item.title}</h4>
+                      {item.blog}
                       <br />
-                      <Link href={'/singleblog?id=' + 'item.link'}>
+                      <Link href={'/'+item.link}>
                         <a style={{ paddingTop: 5, color: 'black', borderRadius: 5, marginTop: 20 }}>DEVAMINI OKU</a>
                       </Link>
 
@@ -165,6 +177,9 @@ const Home = () => {
                 </blockquote>
 
               </div>
+
+            )
+          }
 
 
 
@@ -176,5 +191,24 @@ const Home = () => {
     </>
   )
 }
+
+Home.getInitialProps = async ({ req }) => {
+
+
+  var getting = []
+  firebase.database().ref().child('blogs').on('child_added', data => {
+    getting.push({
+      title: data.val().title,
+      date: data.val().date,
+      image: data.val().image,
+      link: data.val().link,
+      id: data.key
+    })
+
+  })
+  return { posts: getting.slice(0, 6) };
+};
+
+
 
 export default Home;
