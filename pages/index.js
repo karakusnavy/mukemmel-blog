@@ -4,6 +4,7 @@ import Footer from '../components/Footer/Footer'
 import Link from 'next/link'
 import firebase from 'firebase'
 import firebaseconnection from '../components/firebaseconnection'
+import SecureLS from 'secure-ls'
 if (!firebase.apps.length) {
   firebase.initializeApp(firebaseconnection);
 }
@@ -20,24 +21,32 @@ export default class Home extends React.Component {
 
   componentDidMount = async () => {
 
+    var ls = new SecureLS();
+    ls.set('key1', { data: 'test' });
+    console.log(ls.get('key1').data)
+    
+
+
+    localStorage.setItem('test', 'samet karakuş')
+
     var getting = []
 
     var urlRef = firebase.database().ref().child("blogs");
-   await urlRef.once("value", function (snapshot) {
-        snapshot.forEach(function (child) {
-            getting.push({
-                title: child.val().title,
-                date: child.val().date,
-                image: child.val().image,
-                link: child.val().link,
-                blog: child.val().blog,
-                id: child.val()
-            })
-        });
-        
+    await urlRef.once("value", function (snapshot) {
+      snapshot.forEach(function (child) {
+        getting.push({
+          title: child.val().title,
+          date: child.val().date,
+          image: child.val().image,
+          link: child.val().link,
+          blog: child.val().blog,
+          id: child.val()
+        })
+      });
+
     });
     this.setState({
-        liste:getting.splice(0,6)
+      liste: getting.splice(0, 6)
     })
 
   }

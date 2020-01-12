@@ -17,6 +17,10 @@ export default class blog extends React.Component {
     }
 
     componentDidMount = async () => {
+
+
+        console.log(localStorage.getItem('test'))
+
         var getting = []
 
         var urlRef = firebase.database().ref().child("blogs");
