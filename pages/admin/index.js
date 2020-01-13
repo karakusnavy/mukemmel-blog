@@ -5,10 +5,8 @@ import Router from 'next/router'
 function Index({ match }) {
 
   useEffect(() => {
-
-      
+      // veri çekip giriş yaptığını anlayacağım
       Router.push('/')
-    
   })
 
   return(
