@@ -21,10 +21,11 @@ export default class Login extends React.Component {
                                             <div class="form-group">
                                                 <input type="text" class="form-control" name="username" />
                                             </div>
+                                            <a>Şifre</a>
                                             <div class="form-group">
                                                 <input type="password" class="form-control" name="password" />
                                             </div>
-                                            <button type="button" id="sendlogin" class="btn btn-primary">login</button>
+                                            <button type="button" id="sendlogin" class="btn btn-primary">Giriş Yap</button>
                                         </form>
                                     </div>
                                 </div>
