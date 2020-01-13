@@ -1,19 +1,31 @@
 import React, { useEffect } from 'react'
 import Home from './dashboard'
-import Router from 'next/router'
+import { Router, Route, Switch } from 'react-router-dom';
+import Login from './login'
+import { createMemoryHistory } from 'history';
 
-function Index({ match }) {
 
-  useEffect(() => {
-      // veri çekip giriş yaptığını anlayacağım
-      Router.push('/')
-  })
 
-  return(
-    <div>Denem</div>
+
+const Index = () => {
+  const history = createMemoryHistory();
+
+  return (
+    
+      <Router history={history}  >
+      
+        
+          <Route path="/admin">
+            <Home />
+          </Route>
+          <Route path="/admin/samet">
+            <Login />
+          </Route>
+        
+       
+      </Router>
+      
+    
   )
-
-
 }
-
-export default Index;
+export default Index
