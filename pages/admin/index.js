@@ -1,34 +1,30 @@
-import App, {Container} from 'next/app';
+import App, { Container } from 'next/app';
 import React from 'react';
 import { useRouter } from 'next/router'
-import { useEffect,useState } from 'react'
-import loginControl from '../../components/loginControl'
-
-
-function Page() {
-  const router = useRouter()
-    const [loginControl, setloginControl] = useState('0')
-
-  useEffect(() => {
-    
-    if(loginControl == true)
-    alert('giriş yapmışsın')
-    else
-    alert('giriş yapmamışsın')
-    //router.push('/admin/dashboard')
-    
-    
-  }, [])
-
-
-  return(
-    <div>
-
-    </div>
-  )
-
+import { useEffect, useState } from 'react'
+import { BrowserRouter as Router, Route, Switch } from 'react-router-dom'
  
+ import history from '../../components/history'
+export default class Login extends React.Component {
+  
+  render() {
+    return (
+      <div>
+        <Router history={history} >
+          <Switch>
+            <Route path='/'>
+              <div>
+                Selam
+              </div>
+            </Route>
+            <Route path='/admin'>
+              <div>
+                Selam
+              </div>
+            </Route>
+          </Switch>
+        </Router>
+      </div>
+    )
+  }
 }
-
-export default Page
- 
