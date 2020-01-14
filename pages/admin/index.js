@@ -6,19 +6,17 @@ import { BrowserRouter as Router, Route, Switch } from 'react-router-dom'
 import auth from '../../components/auth/login'
 
 
-function login(username,password) {
-    
+function login(username, password) {
+
 }
 
- function index() {
+function index() {
+  useEffect(() => {
 
-
-  useEffect(async ()=>{
-   
   })
 
   return (
-    <div onClick={()=> auth('karakusnavy', '123456789a', 'test')} >Hello</div>
+    <div onClick={() => auth('karakusnavy', '123456789a', 'test')} >Hello</div>
   )
 }
 

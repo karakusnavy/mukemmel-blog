@@ -18,7 +18,7 @@ async function login(username, password, logincontrol) {
     firebase.database().ref().child('users').orderByChild('username').equalTo(username).on("value", function (snapshot) {
         
         if (snapshot.val() != null && snapshot.val()[username].password == password) {
-            return alert('giriş başarılı')
+            return alert('giriş başarılı') // burada başarılı dedikten sonra yönlendirme olacak ekstra olarak secure ls ile arkaplana bir token yerleştirilecek
         }
         else return alert('giriş başarısız')
 
