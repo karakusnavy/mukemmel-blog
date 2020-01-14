@@ -21,12 +21,7 @@ export default class Home extends React.Component {
 
   componentDidMount = async () => {
 
-    var ls = new SecureLS();
-    ls.set('key1', { data: 'test' });
-    console.log(ls.get('key1').data)
-
-    localStorage.setItem('test', 'samet karakuş')
-
+   
     var getting = []
 
     var urlRef = firebase.database().ref().child("blogs");
