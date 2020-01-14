@@ -3,27 +3,22 @@ import React from 'react';
 import { useRouter } from 'next/router'
 import { useEffect, useState } from 'react'
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom'
- import auth from '../../components/auth/login'
+import auth from '../../components/auth/login'
 
-function index() {
-  useEffect(()=>{
 
-    auth('karakusnaavy','123456789a','test').then(res => {
-      if(res != false){
-        //bilgiler doğru
-        console.log('Doğru')
-        console.log(res)
-      }
-      else{
-        console.log('Yanlış')
-        console.log(res)
-        //
-      }
-    })
+function login(username,password) {
+    
+}
 
+ function index() {
+
+
+  useEffect(async ()=>{
+   
   })
-  return(
-    <div>Hello</div>
+
+  return (
+    <div onClick={()=> auth('karakusnavy', '123456789a', 'test')} >Hello</div>
   )
 }
 

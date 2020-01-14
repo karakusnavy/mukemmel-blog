@@ -12,25 +12,19 @@ if (!firebase.apps.length) {
 //localStorage.setItem('test', 'samet karakuş')
 
 
-export default async function login(username, password, logincontrol) {
-    
-    var loginInfo
-    firebase.database().ref().child('users').orderByChild('username').equalTo(username).on("value", function(snapshot) {
-        snapshot.forEach(function(data) {
-            if(data.key != null)
-            {
-                loginInfo = []
-                loginInfo = snapshot.val()
-            }
-            else{
-                loginInfo = false
-            }
-        });
+async function login(username, password, logincontrol) {
+
+
+    firebase.database().ref().child('users').orderByChild('username').equalTo(username).on("value", function (snapshot) {
+        
+        if (snapshot.val() != null && snapshot.val()[username].password == password) {
+            return alert('giriş başarılı')
+        }
+        else return alert('giriş başarısız')
+
     });
 
 
-    var ls = new SecureLS()
-
-    return loginInfo
-
 }
+
+export default login
