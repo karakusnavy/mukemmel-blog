@@ -24,8 +24,6 @@ export default class Home extends React.Component {
     var ls = new SecureLS();
     ls.set('key1', { data: 'test' });
     console.log(ls.get('key1').data)
-    
-
 
     localStorage.setItem('test', 'samet karakuş')
 
