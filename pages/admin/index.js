@@ -1,17 +1,67 @@
+import App, { Container } from 'next/app';
 import React from 'react';
-import ReactDOM from 'react-dom';
-import { Route, BrowserRouter as Router } from 'react-router-dom';
-import App from './dashboard';
+import { useRouter } from 'next/router'
+import { useEffect, useState } from 'react'
+import { BrowserRouter as Router, Route, Switch } from 'react-router-dom'
+import auth from '../../components/auth/login'
+import SecureLS from 'secure-ls'
 
 
-const routing = (
-    <Router>
-        <div>
-            <Route exact path="/" component={App} />
-            <Route path="/admin/dashboard" component={App} />
-            <Route path="/admin/panel" component={App} />
+
+
+function index() {
+  async function loginControl() {
+    await auth(username,password).then((res)=>{
+      alert(res)
+    })
+    
+  }
+  const router = useRouter()
+  useEffect(() => {
+    var ls = new SecureLS();
+    //ls.removeAll()
+    if (ls.get('log_in_my_blog_546_555').length == 0) {
+
+    }
+    else {
+      router.push('/admin/dashboard')
+    }
+  })
+
+  const [username, setUsername] = useState('')
+  const [password, setPassword] = useState('')
+
+  return (
+    <>
+      <div>
+        <link href="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css" />
+        <script src="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+        <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+        <div class="container" style={{ flex: 1 }}>
+          <div class="row justify-content-center align-items-center" style={{ height: 100 }}>
+            <div class="col-4">
+              <h1>Admin Girişi</h1>
+              <div class="card">
+                <div class="card-body">
+                  <form action="" autocomplete="off">
+                    <a>Kullanıcı Adı</a>
+                    <div class="form-group">
+                      <input type="text" onChange={(text) => setUsername(text.target.value)} class="form-control" name="username" />
+                    </div>
+                    <a>Şifre</a>
+                    <div class="form-group">
+                      <input type="password" onChange={(text) => setPassword(text.target.value)} class="form-control" name="password" />
+                    </div>
+                    <button type="button" onClick={() => loginControl()} id="sendlogin" class="btn btn-primary">Giriş Yap</button>
+                  </form>
+                </div>
+              </div>
+            </div>
+          </div>
         </div>
-    </Router>
-)
+      </div>
+    </>
+  )
+}
 
-ReactDOM.render(routing);
+export default index
