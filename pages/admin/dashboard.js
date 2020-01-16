@@ -1,6 +1,8 @@
 import React from "react";
 import firebase from 'firebase'
 import firebaseconnection from '../../components/firebaseconnection'
+import SecureLS from 'secure-ls'
+import { useRouter } from 'next/router'
 if (!firebase.apps.length) {
     firebase.initializeApp(firebaseconnection);
 }
@@ -90,8 +92,17 @@ export default class dashboard extends React.Component {
 
     }
 
-  
+
     componentDidMount = async () => {
+
+        var ls = new SecureLS();
+        if (ls.get('log_in_my_blog_546_555').length == 0) {
+            router.push('/admin')
+        }
+        else {
+            router.push('/admin/dashboard')
+        }
+
         var getting = []
         firebase.database().ref().child('blogs').on('child_added', data => {
             getting.push({
@@ -104,12 +115,13 @@ export default class dashboard extends React.Component {
             this.setState({ blogs: getting })
         })
 
-    
-        firebase.database().ref().child('blogs').on('child_removed', data => {ğ
+
+        firebase.database().ref().child('blogs').on('child_removed', data => {
+            ğ
             var List = []
             List = this.state.blogs
-            for(var i = 0;i<List.length;i++){
-                if(List[i].id == data.key){
+            for (var i = 0; i < List.length; i++) {
+                if (List[i].id == data.key) {
                     List.splice(i, 1);
                 }
             }
@@ -126,6 +138,7 @@ export default class dashboard extends React.Component {
                 <link href="../admin/vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css" />
                 <link href="../admin/vendor/datatables/dataTables.bootstrap4.css" rel="stylesheet" />
                 <link href="../admin/css/sb-admin.css" rel="stylesheet" />
+                <div id="root" className="root" ></div>
                 <div className="modal fade" id="newBlogModal" tabIndex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
                     <div className="modal-dialog" role="document">
                         <div className="modal-content">
@@ -211,7 +224,7 @@ export default class dashboard extends React.Component {
                                                 {
                                                     this.state.blogs.map((item) =>
                                                         <tr>
-                                                            <td><img src={item.image} style={{height:150}} /></td>
+                                                            <td><img src={item.image} style={{ height: 150 }} /></td>
                                                             <td>{item.title}</td>
                                                             <td>{item.date}</td>
                                                             <td><button type="button" onClick={() => alert(item.link)} className="btn btn-primary">YAZIYA GİT</button></td>

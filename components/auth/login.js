@@ -15,12 +15,16 @@ if (!firebase.apps.length) {
 async function login(username, password, logincontrol) {
 
 
-    firebase.database().ref().child('users').orderByChild('username').equalTo(username).on("value", function (snapshot) {
+    var ls = new SecureLS();
+    await firebase.database().ref().child('users').orderByChild('username').equalTo(username).on("value", function (snapshot) {
         
         if (snapshot.val() != null && snapshot.val()[username].password == password) {
-            return alert('giriş başarılı') // burada başarılı dedikten sonra yönlendirme olacak ekstra olarak secure ls ile arkaplana bir token yerleştirilecek
+            
+            ls.set('log_in_my_blog_546_555',username)
+            return true
+
         }
-        else return alert('giriş başarısız')
+        else return false
 
     });
 

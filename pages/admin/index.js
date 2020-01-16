@@ -1,23 +1,17 @@
-import App, { Container } from 'next/app';
 import React from 'react';
-import { useRouter } from 'next/router'
-import { useEffect, useState } from 'react'
-import { BrowserRouter as Router, Route, Switch } from 'react-router-dom'
-import auth from '../../components/auth/login'
+import ReactDOM from 'react-dom';
+import { Route, BrowserRouter as Router } from 'react-router-dom';
+import App from './dashboard';
 
 
-function login(username, password) {
+const routing = (
+    <Router>
+        <div>
+            <Route exact path="/" component={App} />
+            <Route path="/admin/dashboard" component={App} />
+            <Route path="/admin/panel" component={App} />
+        </div>
+    </Router>
+)
 
-}
-
-function index() {
-  useEffect(() => {
-
-  })
-
-  return (
-    <div onClick={() => auth('karakusnavy', '123456789a', 'test')} >Hello</div>
-  )
-}
-
-export default index
+ReactDOM.render(routing);
