@@ -5,11 +5,6 @@ if (!firebase.apps.length) {
     firebase.initializeApp(firebaseconnection);
 }
 
- 
-//ls.set('key1', { data: 'test' });
-//console.log(ls.get('key1').data)
-//localStorage.setItem('test', 'samet karakuş')
-
 
 async function login(username, password) {
 

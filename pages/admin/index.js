@@ -10,6 +10,7 @@ import SecureLS from 'secure-ls'
 
 
 function index() {
+  
   async function loginControl() {
     await auth(username,password).then((res)=>{
       alert(res)
