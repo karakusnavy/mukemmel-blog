@@ -10,6 +10,7 @@ if (!firebase.apps.length) {
 function login(username, password) {
 
      var ls = new SecureLS();
+
     firebase.database().ref().child('users').orderByChild('username').equalTo(username).on("value", function (snapshot) {
         
         if (snapshot.val() != null && snapshot.val()[username].password == password) {
@@ -21,8 +22,6 @@ function login(username, password) {
         else return alert('giriş başarısız')
 
     });
-
-
 }
 
 export default login

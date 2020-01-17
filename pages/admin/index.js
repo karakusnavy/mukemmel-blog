@@ -5,19 +5,38 @@ import { useEffect, useState } from 'react'
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom'
 import auth from '../../components/auth/login'
 import SecureLS from 'secure-ls'
-
+import firebase from 'firebase'
+import firebaseconnection from '../../components/firebaseconnection'
+if (!firebase.apps.length) {
+    firebase.initializeApp(firebaseconnection);
+}
 
 
 
 function index() {
-  
-  function loginControl() {
-   alert(auth(username,password)==undefined?'bekleyin':null)
-    
-  }
+
   const router = useRouter()
+  function login() {
+
+    var ls = new SecureLS();
+
+    firebase.database().ref().child('users').orderByChild('username').equalTo(username).on("value", function (snapshot) {
+
+      if (snapshot.val() != null && snapshot.val()[username].password == password) {
+
+        ls.set('log_in_my_blog_546_555', username)
+        return router.push('/admin/dashboard')
+
+      }
+      else return alert('giriş başarısız')
+
+    });
+  }
+
+
+
   useEffect(() => {
-     
+
     var ls = new SecureLS();
     //ls.removeAll()
     if (ls.get('log_in_my_blog_546_555').length == 0) {
@@ -30,7 +49,7 @@ function index() {
 
   const [username, setUsername] = useState('')
   const [password, setPassword] = useState('')
- 
+
 
   return (
     <>
@@ -53,7 +72,7 @@ function index() {
                     <div class="form-group">
                       <input type="password" onChange={(text) => setPassword(text.target.value)} class="form-control" name="password" />
                     </div>
-                    <button type="button" onClick={() => loginControl()} id="sendlogin" class="btn btn-primary">Giriş Yap</button>
+                    <button type="button" onClick={() => login()} id="sendlogin" class="btn btn-primary">Giriş Yap</button>
                   </form>
                 </div>
               </div>

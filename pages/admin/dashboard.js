@@ -75,6 +75,12 @@ const dashboard = () => {
             setimagelocation(ress)
         })
     }
+
+    async function exit() {
+        var ls = new SecureLS();
+        ls.removeAll();
+        router.push('/admin')
+    }
     async function deleteBlog(id) {
         await firebase.database().ref('blogs/' + id).remove();
         alert('Silindi')
@@ -91,7 +97,7 @@ const dashboard = () => {
         if (ls.get('log_in_my_blog_546_555').length == 0) {
             router.push('/admin')
         }
-      
+
 
         var getting = []
         firebase.database().ref().child('blogs').on('child_added', data => {
@@ -154,6 +160,7 @@ const dashboard = () => {
             <title>Samed Karakuş Admin</title>
             <nav className="navbar navbar-expand navbar-dark bg-dark static-top">
                 <a className="navbar-brand mr-1" href="index.html">Samed Karakuş - Admin Paneli</a>
+                <a className="navbar-brand mr-1 samet" onClick={() => exit()} style={{ color: 'white', fontWeight: 'bold', backgroundColor: 'gray', fontSize: 15, borderRadius: 10, padding: 5, marginLeft: 10 }} >Çıkış Yap</a>
             </nav>
             <div id="wrapper">
                 <div id="content-wrapper">
@@ -251,6 +258,9 @@ font-weight:bold;
 height:200px;
 width:400px;
 margin:5px
+}
+.samet:hover{
+    cursor:pointer;
 }
 
 `}</style>
