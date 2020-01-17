@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import firebase from 'firebase'
+import checkStorage from '../../components/auth/checkStorage'
 import firebaseconnection from '../../components/firebaseconnection'
 import SecureLS from 'secure-ls'
 import { useRouter } from 'next/router'
@@ -10,7 +11,8 @@ if (!firebase.apps.length) {
 
 
 
-const dashboard = () => {
+const dashboard = ({ query }) => {
+
     const router = useRouter()
     function Convert(link) {
         var trMap = {
@@ -92,38 +94,6 @@ const dashboard = () => {
     const [title, settitle] = useState('');
     const [blog, setblog] = useState('');
 
-    useEffect(() => {
-        var ls = new SecureLS();
-        if (ls.get('log_in_my_blog_546_555').length == 0) {
-            router.push('/admin')
-        }
-
-
-        var getting = []
-        firebase.database().ref().child('blogs').on('child_added', data => {
-            getting.push({
-                title: data.val().title,
-                date: data.val().date,
-                image: data.val().image,
-                link: data.val().link,
-                id: data.key
-            })
-            setblogs(getting)
-
-        })
-
-
-        firebase.database().ref().child('blogs').on('child_removed', data => {
-            var List = []
-            List = blogs
-            for (var i = 0; i < List.length; i++) {
-                if (List[i].id == data.key) {
-                    List.splice(i, 1);
-                }
-            }
-            setblogs(List)
-        })
-    })
 
     return (
         <div>
@@ -216,7 +186,7 @@ const dashboard = () => {
                                         </thead>
                                         <tbody>
                                             {
-                                                blogs.map((item) =>
+                                                query.map((item) =>
                                                     <tr>
                                                         <td><img src={item.image} style={{ height: 150 }} /></td>
                                                         <td>{item.title}</td>
@@ -268,5 +238,43 @@ margin:5px
     )
 }
 
+dashboard.getInitialProps = async ({ req2, query }) => {
+
+    
+    var test = checkStorage()
+    if(await checkStorage() == false)
+    router.push('/admin')
+    
+    
+
+
+
+    var getting = []
+    await firebase.database().ref().child('blogs').on('child_added', data => {
+        getting.push({
+            title: data.val().title,
+            date: data.val().date,
+            image: data.val().image,
+            link: data.val().link,
+            id: data.key
+        })
+
+
+    })
+
+
+    await firebase.database().ref().child('blogs').on('child_removed', data => {
+        var List = []
+        List = blogs
+        for (var i = 0; i < List.length; i++) {
+            if (List[i].id == data.key) {
+                List.splice(i, 1);
+            }
+        }
+
+    })
+    return { query: getting };
+
+};
 
 export default dashboard
