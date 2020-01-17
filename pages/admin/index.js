@@ -11,14 +11,13 @@ import SecureLS from 'secure-ls'
 
 function index() {
   
-  async function loginControl() {
-    await auth(username,password).then((res)=>{
-      alert(res)
-    })
+  function loginControl() {
+   alert(auth(username,password)==undefined?'bekleyin':null)
     
   }
   const router = useRouter()
   useEffect(() => {
+     
     var ls = new SecureLS();
     //ls.removeAll()
     if (ls.get('log_in_my_blog_546_555').length == 0) {
@@ -31,6 +30,7 @@ function index() {
 
   const [username, setUsername] = useState('')
   const [password, setPassword] = useState('')
+ 
 
   return (
     <>
