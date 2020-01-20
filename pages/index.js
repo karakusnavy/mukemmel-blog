@@ -1,6 +1,6 @@
 import { Route, Link, Switch } from "react-router-dom";
 import { Redirect } from 'react-router'
-
+import Home from './Home/index'
 function Status({ code, children }) {
   return (
     <Route
@@ -55,7 +55,7 @@ function App() {
       </nav>
 
       <Switch>
-        <Route path="/" exact component={Index} />
+        <Route path="/" exact component={Home} />
         <Route path="/about/" component={About} />
         <Route path="/users/" component={Users} />
         <Redirect from="/people/" to="/users/" />
