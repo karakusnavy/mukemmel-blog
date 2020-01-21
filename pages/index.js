@@ -1,6 +1,7 @@
 import { Route, Link, Switch } from "react-router-dom";
 import { Redirect } from 'react-router'
 import Home from './Home/index'
+import Blog from './Blog/blog'
 function Status({ code, children }) {
   return (
     <Route
@@ -12,17 +13,6 @@ function Status({ code, children }) {
   );
 }
 
-function Index() {
-  return <h2>Home</h2>;
-}
-
-function About() {
-  return <h2>About</h2>;
-}
-
-function Users() {
-  return <h2>Users</h2>;
-}
 
 function NotFound() {
   return (
@@ -37,28 +27,11 @@ function App() {
   return(
     <div>
       <h1>Welcome to Next.js!</h1>
-      <nav>
-        <ul>
-          <li>
-            <Link to="/">Home</Link>
-          </li>
-          <li>
-            <Link to="/about/">About</Link>
-          </li>
-          <li>
-            <Link to="/users/">Users</Link>
-          </li>
-          <li>
-            <Link to="/people/">People</Link>
-          </li>
-        </ul>
-      </nav>
+     
 
       <Switch>
         <Route path="/" exact component={Home} />
-        <Route path="/about/" component={About} />
-        <Route path="/users/" component={Users} />
-        <Redirect from="/people/" to="/users/" />
+        <Route path="/blog" exact component={Blog} />
         <Route component={NotFound}/>
       </Switch>
     </div>
