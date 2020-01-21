@@ -202,7 +202,7 @@ export default class Home extends React.Component {
                         <h4>{item.title.length > 36 ? item.title.substring(0, 37) + '...' : item.title}</h4>
                         {item.blog}
                         <br />
-                        <Link href={'/' + item.link}>
+                        <Link href={'blog/' + item.link}>
                           <a style={{ paddingTop: 5, color: 'black', borderRadius: 5, marginTop: 20 }}>DEVAMINI OKU</a>
                         </Link>
 

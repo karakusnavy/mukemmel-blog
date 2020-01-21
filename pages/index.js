@@ -26,12 +26,13 @@ function NotFound() {
 function App() {
   return(
     <div>
-      <h1>Welcome to Next.js!</h1>
+      <h1> a</h1>
      
 
       <Switch>
         <Route path="/" exact component={Home} />
         <Route path="/blog" exact component={Blog} />
+      
         <Route component={NotFound}/>
       </Switch>
     </div>

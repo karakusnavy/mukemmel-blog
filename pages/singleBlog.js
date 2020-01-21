@@ -2,11 +2,16 @@ import React from "react";
 import firebase from 'firebase'
 import firebaseconnection from '../components/firebaseconnection'
 import Layout from '../components/Layout/Layout'
+import {
+  useParams
+} from "react-router-dom";
+
 if (!firebase.apps.length) {
   firebase.initializeApp(firebaseconnection);
 }
 
 const posts = ({ query }) => {
+ 
   return (
     <Layout sidebar={true} >
       {
@@ -27,9 +32,10 @@ const posts = ({ query }) => {
 }
 
 posts.getInitialProps = async ({ req2, query }) => {
+  const {id} = useParams()
   var BlogText = []
   firebase.database().ref().child('blogs').on('child_added', data => {
-    if (data.val().link == query.postId) {
+    if (data.val().link == id) {
 
       BlogText.push({
         title: data.val().title,
