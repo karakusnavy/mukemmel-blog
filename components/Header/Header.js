@@ -6,7 +6,7 @@ const Header = () => {
     return (
         <>
 
-            <header class="default-header">
+            <header class="default-header" style={{marginTop:-60}} >
 
                 <Links />
                 <nav class="navbar navbar-expand-lg  navbar-light" style={{ marginTop: 70 }}>

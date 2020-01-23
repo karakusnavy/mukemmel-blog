@@ -1,7 +1,7 @@
 import React from "react";
 import firebase from 'firebase'
-import firebaseconnection from '../components/firebaseconnection'
-import Layout from '../components/Layout/Layout'
+import firebaseconnection from '../../components/firebaseconnection'
+import Layout from '../../components/Layout/Layout'
 import {
   useParams
 } from "react-router-dom";
@@ -32,7 +32,7 @@ const posts = ({ query }) => {
 }
 
 posts.getInitialProps = async ({ req2, query }) => {
-  const {id} = useParams()
+  const id = query.blogTitle
   var BlogText = []
   firebase.database().ref().child('blogs').on('child_added', data => {
     if (data.val().link == id) {
