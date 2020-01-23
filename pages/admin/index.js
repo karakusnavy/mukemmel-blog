@@ -2,14 +2,20 @@ import App, { Container } from 'next/app';
 import React from 'react';
 import { useRouter } from 'next/router'
 import { useEffect, useState } from 'react'
-import SecureLS from 'secure-ls'
+import Cookie from 'js-cookie'
+import parseCookies from '../../components/cookie'
+import nextCookie from 'next-cookies'
 import firebase from 'firebase'
 import firebaseconnection from '../../components/firebaseconnection'
 if (!firebase.apps.length) {
     firebase.initializeApp(firebaseconnection);
 }
 
-const index = ({ }) => {
+const index = ({ blogs }) => {
+
+    useEffect(()=>{
+        
+    },[])
     return (
         <>
             <div>
@@ -23,7 +29,7 @@ const index = ({ }) => {
                             <div class="card">
                                 <div class="card-body">
                                     <form action="" autocomplete="off">
-                                        <a>Kullanıcı Adı</a>
+                                        <a>Kullanıcı Adı {blogs} a</a>
                                         <div class="form-group">
                                             <input type="text" onChange={(text) => setUsername(text.target.value)} class="form-control" name="username" />
                                         </div>
@@ -42,15 +48,10 @@ const index = ({ }) => {
         </>
     )
 }
-index.getInitialProps = async ({ req2, query }) => {
-  
+index.getInitialProps = async ( req ) => {
 
-  var a  = localStorage.getItem('sa')
-   
-  
-
-
-  return { blogs: BlogText.splice(0,6) }
-};      
+       
+    return { blogs: 'foo' }
+};
 
 export default index
