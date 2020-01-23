@@ -154,7 +154,7 @@ const Home = ({ blogs }) => {
 
 
       <div className="section-top-border" style={{ padding: 60 }}>
-        <h3 className="mb-30">Son Blog Yazılarım<a style={{ fontSize: 12, backgroundColor: '#499ac1', color: 'white', borderRadius: 5, padding: 2 }}>TÜM BLOG YAZILARIM</a></h3>
+        <h3 className="mb-30">Son Blog Yazılarım<a style={{ fontSize: 12, backgroundColor: '#499ac1', color: 'white', borderRadius: 5, padding: 2, marginLeft:10 }}>TÜM BLOG YAZILARIM</a></h3>
         <div className="row">
 
           {

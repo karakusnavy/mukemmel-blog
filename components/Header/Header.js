@@ -1,8 +1,8 @@
 
 import Links from '../Links/Link';
 import Link from 'next/link'
-
-const Header = () => {
+ 
+const Header = props => {
     return (
         <>
 
@@ -12,7 +12,7 @@ const Header = () => {
                 <nav class="navbar navbar-expand-lg  navbar-light" style={{ marginTop: 70 }}>
                     <div class="container" >
                         <a class="navbar-brand" href="/">
-                            <img src="img/logo.png" alt=""></img>
+                            <img src={props.headerlogo == true ? 'img/logo.png' : '../img/logo.png'} alt=""></img>
                         </a>
                         <button class="navbar-toggler" type="button" data-toggle="collapse"
                             data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
