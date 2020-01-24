@@ -9,29 +9,32 @@ if (!firebase.apps.length) {
 
 
 
-function dashboard({blogsamet}) {
-   
+function dashboard({ blogsamet }) {
 
-    useEffect(() => {
+    const [blogs, setblogs] = useState([]);
+    const [image, setimage] = useState(null);
+    const [title, settitle] = useState('');
+    const [blog, setblog] = useState('');
+    const Router = useRouter()
+
+    useEffect(async () => {
 
 
+        setblogs(blogsamet)
+        var List = []
+        await firebase.database().ref().child('blogs').on('child_removed', data => {
 
-
-       
-
-        firebase.database().ref().child('blogs').on('child_removed', data => {
-            var List = []
+            const SilinenID = data.key
+           
             List = blogs
-            for (var i = 0; i < List.length; i++) {
-                if (List[i].id == data.key) {
-                    List.splice(i, 1);
-                }
+            for (var i = 0; i < List.length; i++){
+                if(List[i].id == SilinenID)
+                List[i].splice(i,1)
             }
+            setblogs(List)
 
         })
 
-        
-        console.log(blogs)
 
     }, [])
 
@@ -58,9 +61,6 @@ function dashboard({blogsamet}) {
 
 
     async function addNewBlog() {
-
-
-
         var today = new Date();
         var dd = String(today.getDate()).padStart(2, '0');
         var mm = String(today.getMonth() + 1).padStart(2, '0'); //January is 0!
@@ -70,20 +70,22 @@ function dashboard({blogsamet}) {
         today = mm + '/' + dd + '/' + yyyy + ' ' + clock;
 
 
-
-        await uploadImage()
         var linkBlog = Convert(title)
-        await firebase.database().ref().child('blogs').push().set({
-            title: title,
-            blog: blog,
-            image: imagelocation,
-            date: today,
-            link: linkBlog
-        });
+        var ref = firebase.storage().ref().child('images/' + image[0].name);
+        await ref.put(image[0])
+        await firebase.storage().ref().child('images/' + image[0].name).getDownloadURL().then((ress) => {
+            console.log('resim adresi: ' + ress)
+            firebase.database().ref().child('blogs').push().set({
+                title: title,
+                blog: blog,
+                image: ress,
+                date: today,
+                link: linkBlog
+            });
+        })
+
 
         alert('Yeni yazı eklendi')
-
-
     }
 
     async function onChange(e) {
@@ -92,13 +94,7 @@ function dashboard({blogsamet}) {
         await setimage(adana)
         console.log(image)
     }
-    async function uploadImage() {
-        var ref = firebase.storage().ref().child('images/' + image.name);
-        await ref.put(image)
-        await firebase.storage().ref().child('images/' + image.name).getDownloadURL().then((ress) => {
-            setimagelocation(ress)
-        })
-    }
+
 
     async function exit() {
         var ls = new SecureLS();
@@ -110,11 +106,7 @@ function dashboard({blogsamet}) {
         alert('Silindi')
 
     }
-    const [blogs, setblogs] = useState([]);
-    const [image, setimage] = useState(null);
-    const [imagelocation, setimagelocation] = useState(null);
-    const [title, settitle] = useState('');
-    const [blog, setblog] = useState('');
+
 
 
     return (
@@ -174,19 +166,8 @@ function dashboard({blogsamet}) {
                                     </div>
                                 </div>
                             </div>
-                            <div className="col-xl-3 col-sm-6 mb-3">
-                                <div className="card text-white bg-warning o-hidden h-100">
-                                    <div className="card-body">
-                                        <div className="card-body-icon">
-                                            <i className="fas fa-fw fa-list"></i>
-                                        </div>
-                                        <div className="mr-5">3 Adet Kullanıcı!</div>
-                                    </div>
-                                </div>
-                            </div>
                             <div className="col-xl-6 col-sm-6 mb-6">
-                                <button type="button" className="btn btn-success" data-toggle="modal" data-target="#newBlogModal">Yeni Blog Ekle</button>
-                                <button style={{ marginLeft: 10 }} type="button" className="btn btn-success">Yeni Kullanıcı Ekle</button>
+                                <button type="button" className="btn btn-success" data-toggle="modal" data-target="#newBlogModal">Yeni Blog Ekle</button>                              
                             </div>
 
                         </div>
@@ -208,7 +189,7 @@ function dashboard({blogsamet}) {
                                         </thead>
                                         <tbody>
                                             {
-                                                blogsamet.map((item) =>
+                                                blogs.map((item) =>
                                                     <tr>
                                                         <td><img src={item.image} style={{ height: 150 }} /></td>
                                                         <td>{item.title}</td>
@@ -260,11 +241,11 @@ margin:5px
     )
 }
 
-dashboard.getInitialProps = async ( req ) => {
+dashboard.getInitialProps = async (req) => {
 
     var getting = []
-    firebase.database().ref().child('blogs').on('child_added', data => {
-        
+    await firebase.database().ref().child('blogs').on('child_added', data => {
+
         getting.push({
             title: data.val().title,
             date: data.val().date,
@@ -274,7 +255,11 @@ dashboard.getInitialProps = async ( req ) => {
         })
 
 
+
+
     })
+
+
 
     return { blogsamet: getting }
 };
