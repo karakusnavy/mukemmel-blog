@@ -14,6 +14,13 @@ const portfolio = ({ blogsamet }) => {
     const [blogs, setblogs] = useState([]);
     const [image, setimage] = useState(null);
     const [title, settitle] = useState('');
+    const [about, setabout] = useState('');
+    const [color1, setcolor1] = useState('');
+    const [site, setsite] = useState('');
+    const [aciklamarengi, setaciklamarengi] = useState('');
+
+    
+    
     const [blog, setblog] = useState('');
     const Router = useRouter()
  
@@ -21,29 +28,46 @@ const portfolio = ({ blogsamet }) => {
     useEffect(() => {
 
         const getting = []
-        firebase.database().ref().child('portfolio').on('child_added', data => {
-
-            console.log(data.val())
+        firebase.database().ref().child('portfolio').on('child_added', data => {            
             getting.push({
                 title: data.val().title,
                 imagelink: data.val().imagelink,                                
                 id: data.key
             })
-            
-        
-            console.log(getting)
-            setblogs(getting)
-
+           
         })
+        setblogs(getting)
         
 
     }, [blogs])
 
-    const addNewPortfolio = () => {
-        //new portfoilsaoslsrekwqlrkweşirlkwei
+    const addNewPortfolio = async () => {
+        var linkBlog = Convert(title)
+        var ref = firebase.storage().ref().child('images/' + image[0].name);
+        await ref.put(image[0])
+        await firebase.storage().ref().child('images/' + image[0].name).getDownloadURL().then((ress) => {            
+            firebase.database().ref().child('portfolio').push().set({
+                about:about,
+                color1:color1,
+                imagelink:ress,
+                link:site,
+                textColor:aciklamarengi,
+                title:title
+            });
+        })
+
+        alert('Yeni portfolio eklendi')
     }
 
+    const deletePortfolio = (id) => {
+        //delete
+    } 
+    async function onChange(e) {
+        var adana = e.target.files
 
+        await setimage(adana)
+        console.log(image)
+    }
     return (
         <div>
             <link rel="stylesheet" href="../css/bootstrap.css"></link>
@@ -62,12 +86,18 @@ const portfolio = ({ blogsamet }) => {
                         </div>
                         <div style={{ padding: 15 }} >
 
-                            Blog Başlığı:<br />
-                            <input id="newbloginput" onChange={(text) => alert('aa')} placeholder="Başlık Giriniz" /><br />
-                            Blog Yazısı Giriniz: <br />
-                            <textarea placeholder="Blog Yazısı Giriniz" onChange={(text) => alert('aa')} value={blog} /><br />
+                            Proje Adı:<br />
+                            <input id="newbloginput"  value={title} onChange={(text) => settitle(text.target.value)} placeholder="Başlık Giriniz" /><br />
+                            Proje Açıklaması: <br />
+                            <textarea placeholder="Blog Yazısı Giriniz"  onChange={(text) => setblog(text.target.value)} value={blog} /><br />
+                            Gradient Renk Kodu:<br />
+                            <input id="newbloginput" onChange={(text) => setcolor1(text.target.value)} placeholder="Gradient Renk Kodu" /><br />
+                            Uygulama Sitesi:<br />
+                            <input id="newbloginput" onChange={(text) => setsite(text.target.value)} placeholder="Site adresi" /><br />
+                            Açıklama Rengi:<br />
+                            <input id="newbloginput" onChange={(text) => setaciklamarengi(text.target.value)} placeholder="Açıklama rengi" /><br />
                             Yazı Resmi Seçiniz:
-                            <input id="newbloginput" type="file" onChange={() => alert('aa')} /><br />
+                            <input id="newbloginput" type="file" onChange={onChange} /><br />
                         </div>
                         <div className="modal-footer">
                             <button type="button" className="btn btn-secondary" data-dismiss="modal">Kapat</button>
