@@ -20,21 +20,24 @@ const portfolio = ({ blogsamet }) => {
 
     useEffect(() => {
 
-        var getting = []
+        const getting = []
         firebase.database().ref().child('portfolio').on('child_added', data => {
 
+            console.log(data.val())
             getting.push({
                 title: data.val().title,
                 imagelink: data.val().imagelink,                                
                 id: data.key
             })
-
+            
+        
+            console.log(getting)
             setblogs(getting)
 
         })
         
 
-    }, [])
+    }, [blogs])
 
     const addNewPortfolio = () => {
         //new portfoilsaoslsrekwqlrkweşirlkwei
