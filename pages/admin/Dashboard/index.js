@@ -9,7 +9,7 @@ if (!firebase.apps.length) {
 
 
 
-function dashboard({ blogsamet }) {
+const dashboard = ({ blogsamet }) => {
 
     const [blogs, setblogs] = useState([]);
     const [image, setimage] = useState(null);
@@ -17,24 +17,27 @@ function dashboard({ blogsamet }) {
     const [blog, setblog] = useState('');
     const Router = useRouter()
 
-    useEffect(async () => {
+    function childAdded() {
+        var getting = []
+        firebase.database().ref().child('blogs').on('child_added', data => {
+
+            getting.push({
+                title: data.val().title,
+                date: data.val().date,
+                image: data.val().image,
+                link: data.val().link,
+                id: data.key
+            })
 
 
-        setblogs(blogsamet)
-        var List = []
-        await firebase.database().ref().child('blogs').on('child_removed', data => {
-
-            const SilinenID = data.key
-           
-            List = blogs
-            for (var i = 0; i < List.length; i++){
-                if(List[i].id == SilinenID)
-                List[i].splice(i,1)
-            }
-            setblogs(List)
 
         })
+        setblogs(getting)
+    }
 
+    useEffect(() => {
+
+        childAdded()
 
     }, [])
 
@@ -167,7 +170,7 @@ function dashboard({ blogsamet }) {
                                 </div>
                             </div>
                             <div className="col-xl-6 col-sm-6 mb-6">
-                                <button type="button" className="btn btn-success" data-toggle="modal" data-target="#newBlogModal">Yeni Blog Ekle</button>                              
+                                <button type="button" className="btn btn-success" data-toggle="modal" data-target="#newBlogModal">Yeni Blog Ekle</button>
                             </div>
 
                         </div>
@@ -194,7 +197,7 @@ function dashboard({ blogsamet }) {
                                                         <td><img src={item.image} style={{ height: 150 }} /></td>
                                                         <td>{item.title}</td>
                                                         <td>{item.date}</td>
-                                                        <td><button type="button" onClick={() => alert(item.link)} className="btn btn-primary">YAZIYA GİT</button></td>
+                                                        <td><button type="button" onClick={() => Router.push('/blog/' + item.link)} className="btn btn-primary">YAZIYA GİT</button></td>
                                                         <td><button type="button" onClick={() => deleteBlog(item.id)} className="btn btn-danger">SİL</button></td>
                                                     </tr>
                                                 )
@@ -243,25 +246,11 @@ margin:5px
 
 dashboard.getInitialProps = async (req) => {
 
-    var getting = []
-    await firebase.database().ref().child('blogs').on('child_added', data => {
-
-        getting.push({
-            title: data.val().title,
-            date: data.val().date,
-            image: data.val().image,
-            link: data.val().link,
-            id: data.key
-        })
 
 
 
 
-    })
-
-
-
-    return { blogsamet: getting }
+    return { blogsamet: 'getting' }
 };
 
 
