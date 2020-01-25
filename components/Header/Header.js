@@ -1,6 +1,7 @@
 
 import Links from '../Links/Link';
 import Link from 'next/link'
+import Head from 'next/head'
  
 const Header = props => {
     return (
@@ -39,7 +40,7 @@ const Header = props => {
                                     </Link>
                                 </li>
                                 <li>
-                                    <Link href={'blog'}>
+                                    <Link href="/blog">
                                         <a>Blog</a>
                                     </Link>
                                 </li>
