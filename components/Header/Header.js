@@ -1,8 +1,7 @@
 
 import Links from '../Links/Link';
 import Link from 'next/link'
-import Head from 'next/head'
- 
+
 const Header = props => {
     return (
         <>
@@ -26,18 +25,18 @@ const Header = props => {
                             id="navbarSupportedContent">
                             <ul class="navbar-nav">
                                 <li>
-                                    <Link href={'/'}>
+                                    <Link href="/">
                                         <a>Anasayfa</a>
                                     </Link>
                                 </li>
                                 <li>
-                                    <Link href={''}>
-                                        <a>Portfolyo</a>
+                                    <Link href="/about">
+                                        <a>Hakkımda</a>
                                     </Link>
                                 </li>
                                 <li>
-                                    <Link href={''}>
-                                        <a>İlham</a>
+                                    <Link href="/portfolio">
+                                        <a>Projeler</a>
                                     </Link>
                                 </li>
                                 <li>
@@ -46,7 +45,7 @@ const Header = props => {
                                     </Link>
                                 </li>
                                 <li>
-                                    <Link href={''}>
+                                    <Link href="/contact">
                                         <a>İletişim</a>
                                     </Link>
                                 </li>

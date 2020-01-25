@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import firebase from 'firebase'
 import firebaseconnection from '../../components/firebaseconnection'
 import Link from 'next/link'
@@ -8,12 +8,16 @@ if (!firebase.apps.length) {
 }
 
 
-const portfolio = ({ query }) => {
-
+const portfolio = ({ }) => {
+    const [portfoliom, setportfolio] = useState([])
     const Box = ({ color1, title, about, link, textColor, imagelink }) => {
 
         const rgb = [color1.substring(1, 3), color1.substring(3, 5), color1.substring(5, 7)];
         const color2 = `rgb(${rgb.map(c => (parseInt(c, 16) * 0.8)).join()})`;
+
+
+
+      
 
 
         return (
@@ -37,13 +41,40 @@ const portfolio = ({ query }) => {
 
         );
     }
+    useEffect(() => {
+
+
+
+        var getting = []
+
+        console.log('aaaaaaa')
+        firebase.database().ref().child('portfolio').on('child_added', data => {
+
+            getting.push({
+                about: data.val().about,
+                color1: data.val().color1,
+                imagelink: data.val().imagelink,
+                link: data.val().link,
+                id: data.key,
+                textColor: data.val().textColor,
+                title: data.val().title,
+            })
+
+
+
+        })
+
+        setportfolio(getting)
+        console.log(portfoliom)
+
+    }, [portfoliom])
 
     return (
         <Layout sidebar={false} >
             <div className='row'>
 
                 {
-                    query.map((item) =>
+                    portfoliom.map((item) =>
                         <Box textColor={item.textColor} color1={item.color1} title={item.title} about={item.about} link={item.link} imagelink={item.imagelink} />
                     )
                 }
@@ -59,30 +90,6 @@ const portfolio = ({ query }) => {
 
 
 
-
-portfolio.getInitialProps = async ({ req2, query }) => {
-
-    var getting = []
-    firebase.database().ref().child('portfolio').on('child_added', data => {
-
-        getting.push({
-            about: data.val().about,
-            color1: data.val().color1,
-            imagelink: data.val().imagelink,
-            link: data.val().link,
-            id: data.key,
-            textColor: data.val().textColor,
-            title: data.val().title,
-        })
-
-
-
-    })
-
-
-    return { query: getting };
-
-};
 
 
 export default portfolio

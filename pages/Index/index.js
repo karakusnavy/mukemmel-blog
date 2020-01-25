@@ -17,6 +17,8 @@ const Home = ({  }) => {
 
   const [blogs,setblogs] = useState([])
 
+   
+
   useEffect(()=>{
 
     var BlogText = []
