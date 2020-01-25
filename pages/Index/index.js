@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
 import Header from '../../components/Header/Header'
 
 
@@ -13,7 +13,27 @@ if (!firebase.apps.length) {
 }
 
 
-const Home = ({ blogs }) => {
+const Home = ({  }) => {
+
+  const [blogs,setblogs] = useState([])
+
+  useEffect(()=>{
+
+    var BlogText = []
+    firebase.database().ref().child('blogs').on('child_added', data => {
+      
+        BlogText.push({
+          title: data.val().title,
+          date: data.val().date,
+          image: data.val().image,
+          link: data.val().link,
+          blog: data.val().blog,
+          id: data.val()
+        })
+    
+    })
+    setblogs(BlogText)
+  },[blogs])
 
   return (
     <>
@@ -196,30 +216,7 @@ const Home = ({ blogs }) => {
   )
 
 }
-Home.getInitialProps = async ({ req2, query }) => {
-  
-
-  
-   
-  var BlogText = []
-  await firebase.database().ref().child('blogs').on('child_added', data => {
-    
-      BlogText.push({
-        title: data.val().title,
-        date: data.val().date,
-        image: data.val().image,
-        link: data.val().link,
-        blog: data.val().blog,
-        id: data.val()
-      })
-  
-  })
-  
-
-
-  return { blogs: BlogText.splice(0,6) }
-};
-
+ 
 export default Home
  
 

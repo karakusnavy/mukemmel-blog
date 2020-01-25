@@ -48,10 +48,6 @@ const index = ({ blogs }) => {
         </>
     )
 }
-index.getInitialProps = async ( req ) => {
 
-       
-    return { blogs: 'foo' }
-};
 
 export default index

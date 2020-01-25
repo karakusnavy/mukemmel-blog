@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import firebase from 'firebase'
 import firebaseconnection from '../../components/firebaseconnection'
 import Link from 'next/link'
@@ -8,11 +8,34 @@ if (!firebase.apps.length) {
 }
 
 
-const blog = ({query}) => {
+const blog = ({   }) => {
+
+    const [blogs,setblogs] = useState([])
+
+    useEffect(() => {
+        var getting = []
+
+        var urlRef = firebase.database().ref().child("blogs");
+        urlRef.once("value", function (snapshot) {
+            snapshot.forEach(function (child) {
+                getting.push({
+                    title: child.val().title,
+                    date: child.val().date,
+                    image: child.val().image,
+                    link: child.val().link,
+                    blog: child.val().blog,
+                    id: child.val()
+                })
+            });
+            setblogs(getting)
+        });
+       
+    },[blogs])
+
     return (
         <Layout sidebar={true} >
             {
-                query.map(item =>
+                blogs.map(item =>
                     <div class="col-lg-12 blogPost">
                         <div class="row">
                             <div class="col-sm-4 align-items-center justify-content-center">
@@ -38,31 +61,7 @@ const blog = ({query}) => {
 }
 
 
-blog.getInitialProps = async ({ req2, query }) => {
 
-   
-    var getting = []
-
-    var urlRef = firebase.database().ref().child("blogs");
-    await urlRef.once("value", function (snapshot) {
-        snapshot.forEach(function (child) {
-            getting.push({
-                title: child.val().title,
-                date: child.val().date,
-                image: child.val().image,
-                link: child.val().link,
-                blog: child.val().blog,
-                id: child.val()
-            })
-        });
-
-    });
-    
-
-
-    return { query: getting };
-
-};
 
 
 export default blog

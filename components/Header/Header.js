@@ -7,9 +7,10 @@ const Header = props => {
     return (
         <>
 
-            <header class="default-header" style={{marginTop:-60}} >
+            <header class="default-header"  >
 
                 <Links />
+               
                 <nav class="navbar navbar-expand-lg  navbar-light" style={{ marginTop: 70 }}>
                     <div class="container" >
                         <a class="navbar-brand" href="/">
