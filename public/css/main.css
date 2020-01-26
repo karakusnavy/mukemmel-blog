@@ -6,6 +6,10 @@
 /* =================================== */
 /*  Basic Style 
 /* =================================== */
+
+
+
+
 ::-moz-selection {
   /* Code for Firefox */
   background-color: #000000;
@@ -51,7 +55,7 @@
 
 body {
   color: #777777;
-  font-family: "Poppins", sans-serif;
+  font-family: 'Futura Bk BT', arial, helvetica, sans-serif !important;
   font-size: 14px;
   font-weight: 300;
   line-height: 1.625em;
