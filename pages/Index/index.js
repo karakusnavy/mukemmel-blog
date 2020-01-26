@@ -47,7 +47,7 @@ function Home() {
     <div>
 
       <Header />
-      <section className="banner-area relative" id="home">
+      <section className="banner-area relative">
         <div className="container">
           <div className="row fullscreen d-flex align-items-center justify-content-center">
             <div className="banner-content col-lg-10">
