@@ -3,6 +3,11 @@ const Sidebar = () => {
         <div class="col-lg-3">
 
             <div class="row">
+                <div class="col-lg-12">
+                    <input type="Button" class="butonum" value="Sertifikalarım" />
+                    <input type="Button" class="butonum" value="Etkinliklerim" />
+                    <input type="Button" class="butonum" value="CV Belgemi İste"/>
+                </div>
                 <div class="col-lg-12 etiketler">
                     <h5>Etiketler</h5>
                     <a>#yazılım </a>
@@ -21,7 +26,9 @@ const Sidebar = () => {
 
                 </div>
             </div>
-
+            <style jsx>{`
+      
+    `}</style>
         </div>
     )
 }
