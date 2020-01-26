@@ -47,7 +47,7 @@ const portfolio = ({ }) => {
 
         var getting = []
 
-        console.log('aaaaaaa')
+
         firebase.database().ref().child('portfolio').on('child_added', data => {
 
             getting.push({
@@ -65,7 +65,7 @@ const portfolio = ({ }) => {
         })
 
         setportfolio(getting)
-        console.log(portfoliom)
+        
 
     }, [portfoliom])
 

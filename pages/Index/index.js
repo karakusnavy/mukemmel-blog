@@ -13,32 +13,39 @@ if (!firebase.apps.length) {
 }
 
 
-const Home = ({  }) => {
+function Home() {
 
-  const [blogs,setblogs] = useState([])
+  const [blogs, setblogs] = useState([])
 
-   
-
-  useEffect(()=>{
-
+  async function getBlog() {
     var BlogText = []
-    firebase.database().ref().child('blogs').on('child_added', data => {
-      
-        BlogText.push({
-          title: data.val().title,
-          date: data.val().date,
-          image: data.val().image,
-          link: data.val().link,
-          blog: data.val().blog,
-          id: data.val()
-        })
-    
+    await firebase.database().ref().child('blogs').on('child_added', data => {
+
+      BlogText.push({
+        title: data.val().title,
+        date: data.val().date,
+        image: data.val().image,
+        link: data.val().link,
+        blog: data.val().blog,
+        id: data.val()
+      })
+
     })
     setblogs(BlogText)
-  },[blogs])
+
+  }
+
+
+
+  useEffect(() => {
+
+    getBlog()
+
+  }, [blogs])
 
   return (
-    <>
+    <div>
+
       <Header />
       <section className="banner-area relative" id="home">
         <div className="container">
@@ -176,7 +183,7 @@ const Home = ({  }) => {
 
 
       <div className="section-top-border" style={{ padding: 60 }}>
-        <h3 className="mb-30">Son Blog Yazılarım<a style={{ fontSize: 12, backgroundColor: '#499ac1', color: 'white', borderRadius: 5, padding: 2, marginLeft:10 }}>TÜM BLOG YAZILARIM</a></h3>
+        <h3 className="mb-30">Son Blog Yazılarım<a style={{ fontSize: 12, backgroundColor: '#499ac1', color: 'white', borderRadius: 5, padding: 2, marginLeft: 10 }}>TÜM BLOG YAZILARIM</a></h3>
         <div className="row">
 
           {
@@ -214,13 +221,13 @@ const Home = ({  }) => {
 
 
       <Footer />
-    </>
+    </div>
   )
 
 }
- 
+
 export default Home
- 
+
 
 
 

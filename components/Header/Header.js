@@ -10,7 +10,7 @@ const Header = props => {
 
                 <Links />
                
-                <nav class="navbar navbar-expand-lg  navbar-light" style={{ marginTop: 70 }}>
+                <nav class="navbar navbar-expand-lg  navbar-light" style={{ marginTop: 5 }}>
                     <div class="container" >
                         <a class="navbar-brand" href="/">
                             <img src={props.headerlogo == true ? 'img/logo.png' : '../img/logo.png'} alt=""></img>
