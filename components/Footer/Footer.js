@@ -44,11 +44,7 @@ const Footer = () => {
                     </div>
                 </div>
             </div>
-            <script src="../js/vendor/jquery-2.2.4.min.js"></script>
-            <script src="../js/vendor/bootstrap.min.js"></script>
-            <script src="../js/jquery.sticky.js"></script>
-            <script src="../js/jquery.nice-select.min.js"></script>
-            <script src="../js/main.js"></script>
+           
         </footer >
     )
 }
