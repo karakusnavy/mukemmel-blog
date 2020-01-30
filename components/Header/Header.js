@@ -27,9 +27,9 @@ const Header = props => {
                             id="navbarSupportedContent">
                             <ul className="navbar-nav">
                                 <li>
-                                    <Link href="/">
-                                        <a>Anasayfa</a>
-                                    </Link>
+                                   
+                                        <a href="/" >Anasayfa</a>
+                                   
                                 </li>
                                 <li>
                                     <Link href="/about">

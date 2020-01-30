@@ -13,9 +13,24 @@ if (!firebase.apps.length) {
 
 const index = ({ blogs }) => {
 
-    useEffect(()=>{
-        
-    },[])
+    const [username, setUsername] = useState('')
+    const [password, setPassword] = useState('')
+
+    async function checkLogin() {
+
+        console.log(username + '  -  ' + password)
+
+
+
+
+    }
+
+    useEffect(() => {
+
+        checkLogin()
+
+
+    }, [])
     return (
         <>
             <div>
@@ -37,7 +52,7 @@ const index = ({ blogs }) => {
                                         <div class="form-group">
                                             <input type="password" onChange={(text) => setPassword(text.target.value)} class="form-control" name="password" />
                                         </div>
-                                        <button type="button" onClick={() => login()} id="sendlogin" class="btn btn-primary">Giriş Yap</button>
+                                        <button type="button" onClick={() => checkLogin()} id="sendlogin" class="btn btn-primary">Giriş Yap</button>
                                     </form>
                                 </div>
                             </div>

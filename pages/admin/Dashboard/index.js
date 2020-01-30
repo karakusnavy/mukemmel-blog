@@ -17,29 +17,31 @@ const dashboard = ({ blogsamet }) => {
     const [blog, setblog] = useState('');
     const Router = useRouter()
 
-    function childAdded() {
-        var getting = []
-        firebase.database().ref().child('blogs').on('child_added', data => {
+    async function getBlog() {
+        var BlogText = []
+        await firebase.database().ref().child('blogs').on('child_added', data => {
 
-            getting.push({
+            BlogText.push({
                 title: data.val().title,
                 date: data.val().date,
                 image: data.val().image,
                 link: data.val().link,
+                blog: data.val().blog,
                 id: data.key
             })
 
-
-
         })
-        setblogs(getting)
+        setblogs(BlogText.reverse())
+
     }
+
+
 
     useEffect(() => {
 
-        childAdded()
+        getBlog()
 
-    }, [])
+    }, [blogs])
 
 
     function Convert(link) {
@@ -105,6 +107,7 @@ const dashboard = ({ blogsamet }) => {
         router.push('/admin')
     }
     async function deleteBlog(id) {
+        console.log(id)
         await firebase.database().ref('blogs/' + id).remove();
         alert('Silindi')
 
@@ -131,7 +134,8 @@ const dashboard = ({ blogsamet }) => {
                         <div style={{ padding: 15 }} >
 
                             Blog Başlığı:<br />
-                            <input id="newbloginput" onChange={(text) => settitle(text.target.value)} placeholder="Başlık Giriniz" /><br />
+
+                            <input type="text" onChange={(text) => settitle(text.target.value)} placeholder="Başlık Giriniz" /><br />
                             Blog Yazısı Giriniz: <br />
                             <textarea placeholder="Blog Yazısı Giriniz" onChange={(text) => setblog(text.target.value)} value={blog} /><br />
                             Yazı Resmi Seçiniz:
@@ -197,7 +201,7 @@ const dashboard = ({ blogsamet }) => {
                                                         <td><img src={item.image} style={{ height: 150 }} /></td>
                                                         <td>{item.title}</td>
                                                         <td>{item.date}</td>
-                                                        <td><button type="button" onClick={() => Router.push('/blog/' + item.link)} className="btn btn-primary">YAZIYA GİT</button></td>
+                                                        <td><a href={'../blog/' + item.link} className="btn btn-primary">YAZIYA GİT</a></td>
                                                         <td><button type="button" onClick={() => deleteBlog(item.id)} className="btn btn-danger">SİL</button></td>
                                                     </tr>
                                                 )
@@ -247,7 +251,7 @@ margin:5px
 dashboard.getInitialProps = async (req) => {
 
 
-
+    
 
 
     return { blogsamet: 'getting' }

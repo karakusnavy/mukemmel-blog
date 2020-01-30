@@ -5,6 +5,7 @@ const Sidebar = () => {
             <div className="row">
                 <div className="col-lg-12">
                     <input type="Button" className="butonum" value="Sertifikalarım" />
+                    <input type="Button" className="butonum" value="Basında Ben" />
                     <input type="Button" className="butonum" value="Etkinliklerim" />
                     <input type="Button" className="butonum" value="CV Belgemi İste"/>
                 </div>
