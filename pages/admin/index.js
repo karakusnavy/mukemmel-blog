@@ -1,10 +1,11 @@
 import App, { Container } from 'next/app';
 import React from 'react';
 import { useRouter } from 'next/router'
+import Router  from 'next/router'
 import { useEffect, useState } from 'react'
 import Cookie from 'js-cookie'
 import parseCookies from '../../components/cookie'
-import nextCookie from 'next-cookies'
+import cookies from 'next-cookies'
 import firebase from 'firebase'
 import firebaseconnection from '../../components/firebaseconnection'
 if (!firebase.apps.length) {
@@ -12,22 +13,36 @@ if (!firebase.apps.length) {
 }
 
 const index = ({ blogs }) => {
-
+    const Router = useRouter()
     const [username, setUsername] = useState('')
     const [password, setPassword] = useState('')
 
+
+   
+
     async function checkLogin() {
+        const getting = []
+        var log = 0
+        await firebase.database().ref('users').on('child_added', data => {
 
-        console.log(username + '  -  ' + password)
+            if (data.val().username == username && data.val().password == password) {
+                alert('Hoş geldin ' + data.val().name)
+                document.cookie = 'loguser=' + username + '; path=/'
+                document.cookie = 'logpass=' + password + '; path=/'
+                log = 1
+                Router.push('/admin/dashboard')
 
+            }
 
+        })
 
-
+        if (log == 0)
+            alert('Bilgiler hatalı')
     }
 
     useEffect(() => {
 
-        checkLogin()
+
 
 
     }, [])
@@ -64,5 +79,13 @@ const index = ({ blogs }) => {
     )
 }
 
+
+index.getInitialProps = async ({ req }) => {
+   
+    Router.replace('/blog')
+
+    
+    return { posts: 'aa' };
+  };
 
 export default index
