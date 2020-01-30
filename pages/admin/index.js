@@ -1,7 +1,7 @@
 import App, { Container } from 'next/app';
 import React from 'react';
 import { useRouter } from 'next/router'
-import Router  from 'next/router'
+import Router from 'next/router'
 import { useEffect, useState } from 'react'
 import Cookie from 'js-cookie'
 import parseCookies from '../../components/cookie'
@@ -12,13 +12,32 @@ if (!firebase.apps.length) {
     firebase.initializeApp(firebaseconnection);
 }
 
-const index = ({ blogs }) => {
+const index = ({ cookies }) => {
     const Router = useRouter()
     const [username, setUsername] = useState('')
     const [password, setPassword] = useState('')
 
 
-   
+    async function loginChecker() {
+        var usernamecok = cookies.loguser
+        var passwordcok = cookies.logpass
+        const getting = []
+        var log = 0
+        await firebase.database().ref('users').on('child_added', data => {
+
+            if (data.val().username == usernamecok && data.val().password == passwordcok) {
+
+                log = 1
+                Router.push('/admin/dashboard')
+
+            }
+
+        })
+
+        return log
+
+    }
+
 
     async function checkLogin() {
         const getting = []
@@ -42,10 +61,15 @@ const index = ({ blogs }) => {
 
     useEffect(() => {
 
-
+        loginChecker()
 
 
     }, [])
+
+
+
+
+
     return (
         <>
             <div>
@@ -59,7 +83,7 @@ const index = ({ blogs }) => {
                             <div class="card">
                                 <div class="card-body">
                                     <form action="" autocomplete="off">
-                                        <a>Kullanıcı Adı {blogs} a</a>
+                                        <a>Kullanıcı Adı</a>
                                         <div class="form-group">
                                             <input type="text" onChange={(text) => setUsername(text.target.value)} class="form-control" name="username" />
                                         </div>
@@ -80,12 +104,11 @@ const index = ({ blogs }) => {
 }
 
 
-index.getInitialProps = async ({ req }) => {
-   
-    Router.replace('/blog')
+index.getInitialProps = ctx => ({
 
-    
-    return { posts: 'aa' };
-  };
+    cookies: cookies(ctx)
+
+
+});
 
 export default index
