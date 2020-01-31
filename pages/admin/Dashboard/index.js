@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import firebase from 'firebase'
 import firebaseconnection from '../../../components/firebaseconnection'
 import { useRouter } from 'next/router'
+import cookies from 'next-cookies'
 
 if (!firebase.apps.length) {
     firebase.initializeApp(firebaseconnection);
@@ -9,7 +10,7 @@ if (!firebase.apps.length) {
 
 
 
-const dashboard = ({ blogsamet }) => {
+const dashboard = ({ cookies }) => {
 
     const [blogs, setblogs] = useState([]);
     const [image, setimage] = useState(null);
@@ -35,10 +36,29 @@ const dashboard = ({ blogsamet }) => {
 
     }
 
+    async function loginChecker() {
+        var usernamecok = cookies.loguser
+        var passwordcok = cookies.logpass
+        const getting = []
+        var log = 0
+        await firebase.database().ref('users').on('child_added', data => {
 
+            if (data.val().username == usernamecok && data.val().password == passwordcok) {
+
+                log++
+
+            }
+
+        })
+
+        if (log == 0)
+            Router.push('/admin')
+
+    }
 
     useEffect(() => {
 
+        loginChecker()
         getBlog()
 
     }, [blogs])
@@ -248,14 +268,13 @@ margin:5px
     )
 }
 
-dashboard.getInitialProps = async (req) => {
+
+dashboard.getInitialProps = ctx => ({
+
+    cookies: cookies(ctx)
 
 
-    
-
-
-    return { blogsamet: 'getting' }
-};
+});
 
 
 export default dashboard

@@ -45,8 +45,8 @@ function Home() {
 
   return (
     <div>
-
-      <Header />
+  <h1>asdasd</h1>
+  <Header />
       <section className="banner-area relative">
         <div className="container">
           <div className="row fullscreen d-flex align-items-center justify-content-center">
@@ -199,11 +199,11 @@ function Home() {
                     </div>
                     <div className="col-lg-10">
                       <h4>{item.title.length > 36 ? item.title.substring(0, 37) + '...' : item.title}</h4>
-                      {item.blog}
+                      {item.blog.length > 300 ? item.blog.substring(0, 300) + '...' : item.blog}
                       <br />
-                      <Link href={'blog/' + item.link}>
-                        <a style={{ paddingTop: 5, color: 'black', borderRadius: 5, marginTop: 20 }}>DEVAMINI OKU</a>
-                      </Link>
+                      
+                        <a href={'blog/' + item.link} style={{ paddingTop: 5, color: 'black', borderRadius: 5, marginTop: 20 }}>DEVAMINI OKU</a>
+                      
 
                     </div>
                   </div>
@@ -221,7 +221,7 @@ function Home() {
 
 
       <Footer />
-    </div>
+   </div>
   )
 
 }

@@ -65,6 +65,7 @@ class MyDocument extends Document {
                     <meta name="description" content=""></meta>
                     <meta name="keywords" content=""></meta>
                     <meta charSet="UTF-8"></meta>
+                    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"></meta>
                     <title>Samed Karakuş - Kişisel</title>
                     <link href="https://fonts.googleapis.com/css?family=Poppins:100,200,400,300,500,600,700" rel="stylesheet"></link>
                     <link rel="stylesheet" href="/css/linearicons.css"></link>

@@ -1,5 +1,5 @@
 function MyApp({ Component, pageProps }) {
-    console.log('burası app')
+    console.log(pageProps)
     return <Component {...pageProps} />
   }
   

@@ -3,15 +3,15 @@ import Links from '../Links/Link';
 import Link from 'next/link'
 
 
+
 const Header = props => {
     return (
-        <>
-  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"></meta>
+        
+
           
             
            
             <header className="default-header"  >
-
                 <nav className="navbar navbar-expand-lg  navbar-light" style={{ marginTop: 5 }}>
                     <div className="container" >
                         <a className="navbar-brand" href="/">
@@ -56,7 +56,7 @@ const Header = props => {
                     </div>
                 </nav>
             </header>
-        </>
+       
     )
 }
 

@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import cookies from 'next-cookies'
 import firebase from 'firebase'
 import firebaseconnection from '../../../components/firebaseconnection'
 import { useRouter } from 'next/router'
@@ -9,7 +10,7 @@ if (!firebase.apps.length) {
 
 
 
-const portfolio = ({ blogsamet }) => {
+const portfolio = ({ cookies }) => {
 
     const [blogs, setblogs] = useState([]);
     const [image, setimage] = useState(null);
@@ -19,25 +20,46 @@ const portfolio = ({ blogsamet }) => {
     const [site, setsite] = useState('');
     const [aciklamarengi, setaciklamarengi] = useState('');
 
-    
-    
+
+
     const [blog, setblog] = useState('');
     const Router = useRouter()
- 
+
+    async function loginChecker() {
+        var usernamecok = cookies.loguser
+        var passwordcok = cookies.logpass
+        const getting = []
+        var log = 0
+        await firebase.database().ref('users').on('child_added', data => {
+
+            if (data.val().username == usernamecok && data.val().password == passwordcok) {
+
+
+
+            }
+
+        })
+
+        if (log == 0)
+            Router.push('/admin')
+
+    }
 
     useEffect(() => {
 
+        loginChecker()
+
         const getting = []
-        firebase.database().ref().child('portfolio').on('child_added', data => {            
+        firebase.database().ref().child('portfolio').on('child_added', data => {
             getting.push({
                 title: data.val().title,
-                imagelink: data.val().imagelink,                                
+                imagelink: data.val().imagelink,
                 id: data.key
             })
-           
+
         })
         setblogs(getting)
-        
+
 
     }, [blogs])
 
@@ -45,14 +67,14 @@ const portfolio = ({ blogsamet }) => {
         var linkBlog = Convert(title)
         var ref = firebase.storage().ref().child('images/' + image[0].name);
         await ref.put(image[0])
-        await firebase.storage().ref().child('images/' + image[0].name).getDownloadURL().then((ress) => {            
+        await firebase.storage().ref().child('images/' + image[0].name).getDownloadURL().then((ress) => {
             firebase.database().ref().child('portfolio').push().set({
-                about:about,
-                color1:color1,
-                imagelink:ress,
-                link:site,
-                textColor:aciklamarengi,
-                title:title
+                about: about,
+                color1: color1,
+                imagelink: ress,
+                link: site,
+                textColor: aciklamarengi,
+                title: title
             });
         })
 
@@ -61,7 +83,7 @@ const portfolio = ({ blogsamet }) => {
 
     const deletePortfolio = (id) => {
         //delete
-    } 
+    }
     async function onChange(e) {
         var adana = e.target.files
 
@@ -87,9 +109,9 @@ const portfolio = ({ blogsamet }) => {
                         <div style={{ padding: 15 }} >
 
                             Proje Adı:<br />
-                            <input id="newbloginput"  value={title} onChange={(text) => settitle(text.target.value)} placeholder="Başlık Giriniz" /><br />
+                            <input id="newbloginput" value={title} onChange={(text) => settitle(text.target.value)} placeholder="Başlık Giriniz" /><br />
                             Proje Açıklaması: <br />
-                            <textarea placeholder="Blog Yazısı Giriniz"  onChange={(text) => setblog(text.target.value)} value={blog} /><br />
+                            <textarea placeholder="Blog Yazısı Giriniz" onChange={(text) => setblog(text.target.value)} value={blog} /><br />
                             Gradient Renk Kodu:<br />
                             <input id="newbloginput" onChange={(text) => setcolor1(text.target.value)} placeholder="Gradient Renk Kodu" /><br />
                             Uygulama Sitesi:<br />
@@ -208,14 +230,11 @@ margin:5px
     )
 }
 
-portfolio.getInitialProps = async (req) => {
+portfolio.getInitialProps = ctx => ({
+
+    cookies: cookies(ctx)
 
 
-
-
-
-    return { blogsamet: 'getting' }
-};
-
+});
 
 export default portfolio
