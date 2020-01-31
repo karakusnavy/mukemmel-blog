@@ -42,9 +42,9 @@ const blog = ({   }) => {
                                 <img src={item.image} style={{ height: 180, width: '95%', borderRadius: 10, backgroundSize: 'contain' }} />
                             </div>
                             <div class="col-sm-6 title">
-                                <Link href={'blog/' + item.link}>
+                                <a href={'blog/' + item.link}>
                                     <h3 >{item.title}</h3>
-                                </Link>
+                                </a>
                                 <br />
                                 <p style={{ marginTop: -15 }} >
                                     {item.blog.length > 300 ? item.blog.substring(0, 280) + '...' : item.blog}

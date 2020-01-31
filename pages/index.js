@@ -1,11 +1,11 @@
 import React, { useEffect, useState } from 'react'
-import Header from '../../components/Header/Header'
+import Header from '../components/Header/Header'
 
 
-import Footer from '../../components/Footer/Footer'
+import Footer from '../components/Footer/Footer'
 import Link from 'next/link'
 import firebase from 'firebase'
-import firebaseconnection from '../../components/firebaseconnection'
+import firebaseconnection from '../components/firebaseconnection'
 import SecureLS from 'secure-ls'
 import { useRouter } from 'next/router'
 if (!firebase.apps.length) {
